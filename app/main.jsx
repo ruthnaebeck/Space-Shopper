@@ -1,30 +1,28 @@
 'use strict'
+//downloads
 import React from 'react'
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {render} from 'react-dom'
 import {connect, Provider} from 'react-redux'
+import axios from 'axios'
 
+// components
 import store from './store'
-// import Jokes from './components/Jokes'
-// import Login from './components/Login'
-// import WhoAmI from './components/WhoAmI'
 import App from './components/App'
 import Planets from './components/Planets'
 import NotFound from './components/NotFound'
 
+// dispatchers
+import {getPlanets} from './reducers/planets'
 
+const onAppEnter = () => {
+  const allPlanets = axios.get('/api/planets') //fix later after db
+    .then(function(res) {
+      return res.data
+    })
+    .then((planets) => store.dispatch(getPlanets(planets)))
+}
 
-/*const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
-)(
-  ({ user, children }) =>
-    <div>
-      <nav>
-        {user ? <WhoAmI/> : <Login/>}
-      </nav>
-      {children}
-    </div>
-)*/
 
 render(
   <Provider store={store}>
