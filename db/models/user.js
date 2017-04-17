@@ -6,6 +6,16 @@ const bcrypt = require('bcryptjs')
 
 module.exports = db => db.define('users', {
   name: STRING,
+  accountType: STRING,
+  streetAddress: STRING,
+  city: STRING,
+  state: STRING,
+  zip: STRING,
+  cardNumber: STRING(19),
+  expMonth: STRING(2),
+  expYear: STRING(4),
+  cardType: STRING,
+  cvv: STRING(4),
   email: {
     type: STRING,
     validate: {
