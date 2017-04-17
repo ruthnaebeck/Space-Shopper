@@ -3,7 +3,11 @@
 const {STRING, INTEGER, DOUBLE} = require('sequelize')
 
 module.exports = db => db.define('orders', {
-  orderNumber: STRING,
+  id: {
+    type: INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
   status: STRING,
   qty: INTEGER,
   price: DOUBLE
@@ -11,4 +15,5 @@ module.exports = db => db.define('orders', {
 
 module.exports.associations = (Order, {User}) => {
   Order.belongsTo(User)
+  Order.belongsTo(Order, {as: 'order'})
 }
