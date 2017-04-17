@@ -16,7 +16,7 @@ import NotFound from './components/NotFound'
 import {getPlanets} from './reducers/planets'
 
 const onAppEnter = () => {
-  const allPlanets = axios.get('/api/planets') //fix later after db
+  axios.get('/api/planets') //fix later after db
     .then(function(res) {
       return res.data
     })
@@ -27,7 +27,7 @@ const onAppEnter = () => {
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
+      <Route path="/" component={App} onEnter={onAppEnter}>
         <IndexRedirect to="/planets" />
         <Route path="/planets" component={Planets} />
       </Route>
