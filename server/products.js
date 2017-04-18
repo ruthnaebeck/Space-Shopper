@@ -5,7 +5,7 @@ module.exports = require('express').Router()
   .get('/', (req, res, next) =>
       Product.findAll({
         where: {
-          id: req.params.planetId
+          category_id: req.params.categoryId
         }
       })
         .then(products => res.json(products))

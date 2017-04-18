@@ -23,14 +23,17 @@ const onAppEnter = () => {
       return res.data
     })
     .then((planets) => store.dispatch(getPlanets(planets)))
+    .catch(() => store.dispatch(getPlanets([{id: 1, name: 'Mars'}])))
 }
 
-const onPlanetEnter = () => {
-  axios.get('/api/planets/:planetId')
+const onPlanetEnter = ({params: {planetId}}) => {
+  console.log(planetId)
+  axios.get(`/api/planets/${planetId}`)
   .then(function(res){
     return res.data
   })
   .then((products) => store.dispatch(getProducts(products)))
+  .catch(() => store.dispatch(getProducts([{id: 1, name: 'Vacation in Mars'}])))
 }
 
 render(
@@ -39,7 +42,7 @@ render(
       <Route path="/" component={App} onEnter={onAppEnter}>
         <IndexRedirect to="/planets" />
         <Route path="/planets" component={Planets}>
-          <Route path="planets/:planetId" component={Products} onEnter={onPlanetEnter}/>
+          <Route path=":planetId" component={Products} onEnter={onPlanetEnter}/>
         </Route>
       </Route>
       <Route path='*' component={NotFound} />
