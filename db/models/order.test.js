@@ -4,7 +4,7 @@ const db = require('APP/db')
   , { User, Product, Order } = db
   , { expect } = require('chai')
 
-/* global describe it before afterEach */
+/* global describe it before afterEach beforeEach */
 
 describe('Order', () => {
   before('Await database sync', () => db.didSync)
@@ -45,25 +45,7 @@ describe('Order', () => {
 
   afterEach('Drop and Recreate Tables', () => db.sync({ force: true }))
 
-  describe('Create an Order with 2 items', () => {
-    beforeEach('Create Order', () =>
-      Promise.all([
-        Order.create({
-          status: 'active',
-          qty: 1,
-          price: 10,
-          user_id: 1,
-          product_id: 1
-        }),
-        Order.create({
-          status: 'active',
-          qty: 2,
-          price: 15,
-          user_id: 1,
-          product_id: 2
-        })
-      ])
-    )
+  describe('Check Users and Products', () => {
     it('Created a User with userId 1', () => {
       User.findAll({})
         .then(users => {
@@ -71,22 +53,42 @@ describe('Order', () => {
           expect(users[0].id).to.equal(1)
         })
     })
-    it('Created 2 Products with productId 1 & 2', () => {
+    it('Created 2 Products', () => {
       Product.findAll({})
         .then(products => {
-          expect(products[0].id).to.equal(1)
-          expect(products[1].id).to.equal(2)
+          expect(products.length).to.equal(2)
         })
     })
-    it('Created Order with proper orderId', () =>
+  })
+
+  describe('Create an Order with 2 items', () => {
+    var ord = Order.build()
+    beforeEach('Create Order', () =>
+      Order.create({
+        orderNumber: ord.getOrdNum,
+        status: 'active',
+        qty: 1,
+        price: 10,
+        user_id: 1,
+        product_id: 1
+      })
+      .then(order => order.addItem({
+        status: 'active',
+        qty: 2,
+        price: 15,
+        user_id: 1,
+        product_id: 2
+      }))
+      .then(() => null)
+    )
+    it('Created Order items with matching orderNumber', () =>
       Order.findAll({})
         .then(orders => {
-          console.log(orders)
           expect(orders.length).to.equal(2)
-          expect(orders[0].orderId).to.equal(orders[1].orderId)
-          expect(orders[0].orderId).to.not.equal(undefined)
-          expect(orders[2].orderId).to.not.equal(undefined)
+          expect(orders[0].orderNumber).to.equal(orders[1].orderNumber)
+          expect(orders[0].orderNumber).to.not.equal(undefined)
+          expect(orders[1].orderNumber).to.not.equal(undefined)
         })
-      )
+    )
   })
 })
