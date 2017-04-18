@@ -10,8 +10,8 @@ module.exports = db => db.define('products', {
   image: STRING
 })
 
-module.exports.associations = (Product, {User, Order, Review, Category}) => {
-  Product.belongsToMany(User, {through: Order})
+module.exports.associations = (Product, {Review, Category, Item}) => {
   Product.hasMany(Review)
   Product.belongsTo(Category)
+  Product.hasMany(Item)
 }

@@ -1,7 +1,7 @@
 'use strict'
 const Promise = require('bluebird')
 const db = require('APP/db')
-  , { User, Product, Order, Category } = db
+  , { User, Product, Order, Category, Item } = db
   , { expect } = require('chai')
 
 /* global describe it before afterEach beforeEach */
@@ -31,7 +31,7 @@ describe('Order', () => {
       Product.create({
         title: 'item1',
         description: 'example',
-        category_id: 1,
+        // category_id: 1,
         price: 12,
         invQty: 4,
         image: 'mars.jpg'
@@ -39,7 +39,7 @@ describe('Order', () => {
       Product.create({
         title: 'item2',
         description: 'example2',
-        category_id: 1,
+        // category_id: 1,
         price: 5,
         invQty: 2,
         image: 'venus.jpg'
@@ -73,32 +73,38 @@ describe('Order', () => {
   })
 
   describe('Create an Order with 2 items', () => {
-    var ord = Order.build()
     beforeEach('Create Order', () =>
       Order.create({
-        orderNumber: ord.getOrdNum,
         status: 'active',
-        qty: 1,
-        price: 10,
         user_id: 1,
-        product_id: 1
-      })
-      .then(order => order.addItem({
-        status: 'active',
-        qty: 2,
-        price: 15,
-        user_id: 1,
-        product_id: 2
-      }))
-      .then(() => null)
+        items: [
+          {
+            qty: 2,
+            price: 15,
+            product_id: 2
+          },
+          {
+            qty: 1,
+            price: 10,
+            product_id: 1
+          }
+        ]
+      }, {include: [Item]})
+      .then(order => order)
     )
-    it('Created Order items with matching orderNumber', () =>
+    it('Order Created', () =>
       Order.findAll({})
         .then(orders => {
-          expect(orders.length).to.equal(2)
-          expect(orders[0].orderNumber).to.equal(orders[1].orderNumber)
-          expect(orders[0].orderNumber).to.not.equal(undefined)
-          expect(orders[1].orderNumber).to.not.equal(undefined)
+          expect(orders.length).to.equal(1)
+        })
+    )
+    it('Items Created', () =>
+      Item.findAll({})
+        .then(items => {
+          expect(items.length).to.equal(2)
+          expect(items[0].order_id).to.equal(items[1].order_id)
+          expect(items[0].order_id).to.not.equal(undefined)
+          expect(items[1].order_id).to.not.equal(undefined)
         })
     )
   })
