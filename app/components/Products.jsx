@@ -25,13 +25,13 @@ const Products = (props) => {
 const mapStateToProps = (state) => {
   // will need to check our state once connected to DB
   return {
-    products: state.products.products,
+    products: state.products.products
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-}
+// const mapDispatchToProps = (dispatch) => {
+// }
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps
   )(Products)

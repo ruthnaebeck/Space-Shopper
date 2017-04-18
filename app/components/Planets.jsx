@@ -1,15 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux';
 // need selectPlanet action-creator/action sets clickedOn planet
+import { Link } from 'react-router';
 
 const Planets = (props) => {
+
   return (
     <div>
       {props.planets.map((planet) => {
         return (<div key={planet.id} className="col-md-4">
           <Link to={`/api/planets/${planet.id}`}>
             <span><h3>{planet.name}</h3>
-             <img />
+             <img src={planet.image}/>
             </span>
           </Link>
         </div>)
@@ -30,9 +32,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-}
+// const mapDispatchToProps = (dispatch) => {
+// }
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps
   )(Planets)
+
