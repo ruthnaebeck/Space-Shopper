@@ -1,7 +1,7 @@
 'use strict'
 const Promise = require('bluebird')
 const db = require('APP/db')
-  , { User, Product, Order } = db
+  , { User, Product, Order, Category } = db
   , { expect } = require('chai')
 
 /* global describe it before afterEach beforeEach */
@@ -24,10 +24,14 @@ describe('Order', () => {
         cvv: '123',
         email: 'cigdem@test.com'
       }),
+      Category.create({
+        name: 'Mars',
+        image: 'mars.jpg'
+      }),
       Product.create({
         title: 'item1',
         description: 'example',
-        category: 'mars',
+        category_id: 1,
         price: 12,
         invQty: 4,
         image: 'mars.jpg'
@@ -35,7 +39,7 @@ describe('Order', () => {
       Product.create({
         title: 'item2',
         description: 'example2',
-        category: 'venus',
+        category_id: 1,
         price: 5,
         invQty: 2,
         image: 'venus.jpg'
@@ -51,6 +55,13 @@ describe('Order', () => {
         .then(users => {
           expect(users.length).to.equal(1)
           expect(users[0].id).to.equal(1)
+        })
+    })
+    it('Created Mars Category', () => {
+      Category.findAll({})
+        .then(categories => {
+          expect(categories.length).to.equal(1)
+          expect(categories[0].name).to.equal('Mars')
         })
     })
     it('Created 2 Products', () => {
