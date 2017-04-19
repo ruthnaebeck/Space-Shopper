@@ -12,10 +12,12 @@ import App from './components/App'
 import Planets from './components/Planets'
 import Products from './components/Products'
 import NotFound from './components/NotFound'
+import Cart from './components/Cart'
 
 // dispatchers
-import {getPlanets} from './reducers/planets'
-import {getProducts} from './reducers/products'
+import { getPlanets } from './reducers/planets'
+import { getProducts } from './reducers/products'
+import { fetchOrder } from './reducers/cart'
 
 const onAppEnter = () => {
   axios.get('/api/planets') // test later after db
@@ -33,6 +35,10 @@ const onPlanetEnter = () => {
   .then((products) => store.dispatch(getProducts(products)))
 }
 
+const onCartEnter = function(nextRouterSTate) {
+  store.dispatch(fetchOrder()) // will need to pass in order Id
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -42,8 +48,20 @@ render(
           <Route path="planets/:planetId" component={Products} onEnter={onPlanetEnter}/>
         </Route>
       </Route>
+      <Route path="/cart" component={Cart} onEnter={onCartEnter} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
   document.getElementById('main')
 )
+
+/* ------------- CONTAINER ---------------- */
+
+// const mapStateToProps = null;
+// const mapDispatch = dispatch => ({
+//   onCartEnter: () => {
+//     dispatch(fetchItems())
+//   }
+// })
+
+// export default connect(mapStateToProps, mapDispatch)(Routes)
