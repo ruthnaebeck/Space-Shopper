@@ -47,8 +47,8 @@ render(
         <Route path="/planets" component={Planets}>
           <Route path="planets/:planetId" component={Products} onEnter={onPlanetEnter}/>
         </Route>
+        <Route path="/cart" component={Cart} onEnter={onCartEnter} />
       </Route>
-      <Route path="/cart" component={Cart} onEnter={onCartEnter} />
       <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
