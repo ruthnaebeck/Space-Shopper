@@ -5,10 +5,11 @@ import { Link } from 'react-router'
 export const Product = (props) => {
   const product = props.selectedProduct
   const qty = product.invQty
+  const reviews= props.reviews
   return (
     <div>
-      <h2> {product.title} </h2>
       <div className="col-md-6" id="productImage">
+        <h2> {product.title} </h2>
         <img src={product.image} />
           <div>
             <span className="price">${product.price}</span>
@@ -26,6 +27,24 @@ export const Product = (props) => {
           <button type='submit' className='btn btn-success' onClick={() => {}}> Add To Cart </button>
         </div>
       </div>
+      <table className='table table-striped table-hover'>
+        <thead>
+          <tr>
+            <th> User Name </th>
+            <th> Rating </th>
+            <th> Review Details</th>
+          </tr>
+          </thead>
+          <tbody>
+            {reviews && reviews.map(
+              review => <tr key={review.id}>
+                <td> {review.user.name} </td>
+                <td> {review.starRating} </td>
+                <td> {review.text} </td>
+                </tr>
+            ) }
+          </tbody>
+      </table>
     </div>
   )
 }
@@ -44,9 +63,10 @@ const generateOptions = (qty) => {
 
 const mapStateToProps = (state) => {
   // will need to check our state once connected to DB
-  console.log('selected product from state', state.products.selectedProduct)
+  //console.log('selected product from state', state.products.selectedProduct)
   return {
     selectedProduct: state.products.selectedProduct,
+    reviews: state.reviews.reviews
   }
 }
 

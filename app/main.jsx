@@ -17,6 +17,7 @@ import NotFound from './components/NotFound'
 // dispatchers
 import {getPlanets} from './reducers/planets'
 import {getProducts} from './reducers/products'
+import {getReviews} from './reducers/reviews'
 
 const onAppEnter = () => {
   axios.get('/api/planets') // test later after db
@@ -36,6 +37,15 @@ const onPlanetEnter = ({params: {categoryId}}) => {
   .catch()
 }
 
+const onProductEnter = ({params: {productId}}) => {
+  axios.get(`/api/products/${productId}`)
+  .then(function(res) {
+    return res.data
+  })
+    .then((reviews) => store.dispatch(getReviews(reviews)))
+    .catch()
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -43,7 +53,7 @@ render(
         <IndexRedirect to="/planets" />
         <Route path="/planets" component={Planets} />
         <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
-        <Route path="/products/:productId" component={Product} />
+        <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
