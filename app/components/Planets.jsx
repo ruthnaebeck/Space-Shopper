@@ -10,7 +10,7 @@ export const Planets = (props) => {
       {props.planets.map((planet) => {
         return (<div key={planet.id} className="col-md-4">
           <Link to={`/planets/${planet.id}`}>
-            <span><h3>{planet.name}</h3>
+            <span><h2>{planet.name}</h2>
              <img src={planet.image} />
             </span>
           </Link>

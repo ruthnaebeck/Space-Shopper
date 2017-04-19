@@ -3,27 +3,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 export const Product = (props) => {
-  console.log('product props', props)
   const product = props.selectedProduct
   const qty = product.invQty
   return (
     <div>
-      <div>
-        <h3> {product.title} </h3>
+      <h2> {product.title} </h2>
+      <div className="col-md-6" id="productImage">
         <img src={product.image} />
+          <div>
+            <span className="price">${product.price}</span>
+          </div>
+      </div>
+      <div className="col-md-6">
+        <h5>Description: </h5>
+        <p>{product.description}</p>
+        <label> Quantity </label>
+        <select>
+          <option> </option>
+          {generateOptions(qty)}
+        </select>
         <div>
-          <span>
-            ${product.price}
-          </span>
+          <button type='submit' className='btn btn-success' onClick={() => {}}> Add To Cart </button>
         </div>
-        <div>
-          <label> Quantity </label>
-          <select>
-            <option> </option>
-            {generateOptions(qty)}
-          </select>
-        </div>
-        <button type='submit' className='btn btn-success' onClick={() => {}}> Add To Cart </button>
       </div>
     </div>
   )

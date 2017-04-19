@@ -10,12 +10,8 @@ export const Products = (props) => {
     <div>
       {props.products.map((product) => {
         return (<div key={product.id} className="col-md-4">
-          <Link to={`/products/${product.id}`} onClick={() => {
-            console.log('product in map products', product)
-            props.setProduct(product)
-          }
-        }>
-            <span><h3>{product.title}</h3>
+          <Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
+            <span><h2>{product.title}</h2>
              <img src={product.image}/>
             </span>
           </Link>
