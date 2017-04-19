@@ -11,6 +11,7 @@ import store from './store'
 import App from './components/App'
 import Planets from './components/Planets'
 import Products from './components/Products'
+import Product from './components/Product'
 import NotFound from './components/NotFound'
 
 // dispatchers
@@ -44,6 +45,7 @@ render(
         <Route path="/planets" component={Planets}>
           <Route path=":planetId" component={Products} onEnter={onPlanetEnter}/>
         </Route>
+        <Route path="/products/:productId" component={Product}/>
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

@@ -1,13 +1,15 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { selectProduct } from '../reducers/products'
 
-const Products = (props) => {
+
+export const Products = (props) => {
   return (
     <div>
       {props.products.map((product) => {
         return (<div key={product.id} className="col-md-4">
-          <Link>
+          <Link to={`/products/${product.id}`} onClick={() => selectProduct(product)}>
             <span><h3>{product.name}</h3>
              <img />
             </span>
@@ -29,9 +31,13 @@ const mapStateToProps = (state) => {
     products: state.products.products,
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-// }
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectProduct(product) {
+      dispatch(selectProduct(product))
+    }
+  }
+}
 
 export default connect(
   mapStateToProps
