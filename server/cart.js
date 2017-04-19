@@ -45,7 +45,7 @@ module.exports = require('express').Router()
   })
   .delete('/:pId', (req, res, send) => {
     var pId = req.params.pId
-    var cart = req.session.cart
+    var items = req.session.cart.items
     if (req.user) {
       Item.destroy({
         where: { product_id: pId }
@@ -53,11 +53,10 @@ module.exports = require('express').Router()
         .then(() => res.sendStatus(204))
     } else {
       var idx = -1
-      for (var i = 0; i < cart.length; i++) {
-        // Need to determine how the productId will be in the cart
-        if (cart[i].productId === pId) idx = i
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].productId === pId) idx = i
       }
-      cart.splice(idx, 1)
+      items.splice(idx, 1)
       res.sendStatus(204)
     }
   })

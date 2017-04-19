@@ -1,5 +1,5 @@
 'use strict'
-//downloads
+// downloads
 import React from 'react'
 import {Router, Route, IndexRedirect, browserHistory} from 'react-router'
 import {render} from 'react-dom'
@@ -17,7 +17,7 @@ import Cart from './components/Cart'
 // dispatchers
 import { getPlanets } from './reducers/planets'
 import { getProducts } from './reducers/products'
-import { fetchOrder } from './reducers/cart'
+import { fetchOrder } from './reducers/order'
 
 const onAppEnter = () => {
   axios.get('/api/planets') // test later after db
@@ -29,7 +29,7 @@ const onAppEnter = () => {
 
 const onPlanetEnter = () => {
   axios.get('/api/planets/:planetId')
-  .then(function(res){
+  .then(function(res) {
     return res.data
   })
   .then((products) => store.dispatch(getProducts(products)))

@@ -1,10 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { removeItem } from '../reducers/order'
 
 class Cart extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.removeSubmit = this.removeSubmit.bind(this)
   }
 
   render() {
@@ -23,14 +25,15 @@ class Cart extends React.Component {
         </thead>
         <tbody>
           {items.map((item) =>
-            <tr key={item.id}>
+            <tr key={item.productId}>
               <td>{item.product.title}</td>
               <td>{item.qty}</td>
               <td>{item.price}</td>
               <td>
-                <button id={item.id}
+                <button id={item.productId}
+                        onClick={this.removeSubmit}
                         className="btn btn-default btn-xs">
-                  <span id={item.id}
+                  <span id={item.productId}
                         className="glyphicon glyphicon-trash">
                   </span>
                 </button>
@@ -41,11 +44,15 @@ class Cart extends React.Component {
     </div>
     )
   }
+  removeSubmit(evt) {
+    evt.stopPropagation()
+    this.props.removeItem(Number(evt.target.id))
+  }
 }
 
-/*------------- CONTAINER ---------------*/
+/* ------------- CONTAINER --------------- */
 
 const mapStateToProps = (order) => (order)
-const mapDispatch = null
+const mapDispatch = { removeItem }
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
