@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 // need selectPlanet action-creator/action sets clickedOn planet
 
 export const Planets = (props) => {
+  console.log('props in planets', props.planets[0])
   return (
     <div>
       {props.planets.map((planet) => {
@@ -31,9 +32,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-}
+// const mapDispatchToProps = (dispatch) => {
+// }
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps
   )(Planets)

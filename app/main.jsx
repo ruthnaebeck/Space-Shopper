@@ -18,7 +18,7 @@ import {getPlanets} from './reducers/planets'
 import {getProducts} from './reducers/products'
 
 const onAppEnter = () => {
-  axios.get('/api/planets') // test later after db
+  axios.get('/planets') // test later after db
     .then(function(res) {
       return res.data
     })
@@ -28,7 +28,7 @@ const onAppEnter = () => {
 
 const onPlanetEnter = ({params: {planetId}}) => {
   console.log(planetId)
-  axios.get(`/api/planets/${planetId}`)
+  axios.get(`/planets/${planetId}`)
   .then(function(res){
     return res.data
   })
