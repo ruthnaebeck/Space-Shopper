@@ -19,22 +19,21 @@ import {getPlanets} from './reducers/planets'
 import {getProducts} from './reducers/products'
 
 const onAppEnter = () => {
-  axios.get('/planets') // test later after db
+  axios.get('/api/planets') // test later after db
     .then(function(res) {
       return res.data
     })
     .then((planets) => store.dispatch(getPlanets(planets)))
-    .catch(() => store.dispatch(getPlanets([{id: 1, name: 'Mars'}])))
+    .catch()
 }
 
-const onPlanetEnter = ({params: {planetId}}) => {
-  console.log(planetId)
-  axios.get(`/planets/${planetId}`)
-  .then(function(res){
+const onPlanetEnter = ({params: {categoryId}}) => {
+  axios.get(`/api/planets/${categoryId}`)
+  .then(function(res) {
     return res.data
   })
   .then((products) => store.dispatch(getProducts(products)))
-  .catch(() => store.dispatch(getProducts([{id: 1, name: 'Vacation in Mars'}])))
+  .catch()
 }
 
 render(
@@ -42,10 +41,9 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onAppEnter}>
         <IndexRedirect to="/planets" />
-        <Route path="/planets" component={Planets}>
-          <Route path=":planetId" component={Products} onEnter={onPlanetEnter}/>
-        </Route>
-        <Route path="/products/:productId" component={Product}/>
+        <Route path="/planets" component={Planets} />
+        <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
+        <Route path="/products/:productId" component={Product} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>

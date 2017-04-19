@@ -3,21 +3,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 export const Product = (props) => {
+  console.log('product props', props)
   const product = props.selectedProduct
   const qty = product.invQty
   return (
     <div>
-      <h3> {product.name} </h3>
-      <img src={product.image} />
-      <span>
-        {product.price}
-      </span>
-      <label> Quantity </label>
-      <select>
-        <option> </option>
-        {generateOptions(qty)}
-      </select>
-      <button type='submit' className='btn btn-success' onClick={() => {}}> Add To Cart </button>
+      <div>
+        <h3> {product.title} </h3>
+        <img src={product.image} />
+        <div>
+          <span>
+            ${product.price}
+          </span>
+        </div>
+        <div>
+          <label> Quantity </label>
+          <select>
+            <option> </option>
+            {generateOptions(qty)}
+          </select>
+        </div>
+        <button type='submit' className='btn btn-success' onClick={() => {}}> Add To Cart </button>
+      </div>
     </div>
   )
 }
@@ -27,7 +34,7 @@ const generateOptions = (qty) => {
   const result = []
   let i = 1
   while (i <= qty) {
-    result.push(<option className='qty'> i </option>)
+    result.push(<option key={i} className='qty'> {i} </option>)
     i++
   }
   return result
@@ -36,14 +43,15 @@ const generateOptions = (qty) => {
 
 const mapStateToProps = (state) => {
   // will need to check our state once connected to DB
+  console.log('selected product from state', state.products.selectedProduct)
   return {
     selectedProduct: state.products.selectedProduct,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-}
+// const mapDispatchToProps = (dispatch) => {
+// }
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps
 )(Product)

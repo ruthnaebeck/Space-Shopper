@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 // need selectPlanet action-creator/action sets clickedOn planet
 
 export const Planets = (props) => {
-  console.log('props in planets', props.planets[0])
+  console.log('props in planets', props.planets)
   return (
     <div>
       {props.planets.map((planet) => {

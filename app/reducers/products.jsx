@@ -19,7 +19,7 @@ export const getProducts = function(products) {
 export const selectProduct = function(product) {
   return {
     type: SELECT_PRODUCT,
-    selectProduct: product
+    selectedProduct: product
   }
 }
 
