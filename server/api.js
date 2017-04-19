@@ -7,6 +7,18 @@ api
   .use('/auth', require('./auth'))
   .use('/users', require('./users'))
   .use('/planets', require('./planets'))
+  .use('/cart', require('./cart'))
 
 // No routes matched? 404.
 api.use((req, res) => res.status(404).end())
+
+
+  // .get('/session', (req, res, next) => {
+  //   req.session.cart = [{productId: 1, qty: 1}, {productId: 2, qty: 2}]
+  //   console.log('Add to Session' + req.session.cart)
+  //   res.status(200).send('Added to Cart ' + JSON.stringify(req.session.cart))
+  // })
+  // .get('/test', (req, res, next) => {
+  //   console.log('Print Session', req.session.cart)
+  //   res.send('Print Cart: ' + JSON.stringify(req.session.cart))
+  // })
