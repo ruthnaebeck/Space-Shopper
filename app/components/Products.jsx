@@ -9,10 +9,10 @@ export const Products = (props) => {
   return (
     <div>
       {props.products.map((product) => {
-        return (<div key={product.id} className="col-md-4">
+        return (<div key={product.id} className= "products col-md-4">
           <Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
             <span><h2>{product.title}</h2>
-             <img src={product.image}/>
+             <img className="productImage" src={product.image}/>
             </span>
           </Link>
         </div>)

@@ -53,6 +53,14 @@ const categories = seed(Category, {
   mars: {
     name: 'Mars',
     image: '/assets/images/mars.jpg',
+  },
+  titan: {
+    name: 'Titan',
+    image: '/assets/images/titan.jpg',
+  },
+  neptune: {
+    name: 'Neptune',
+    image: '/assets/images/neptune.jpg'
   }
 })
 
@@ -62,12 +70,147 @@ const products = seed(Product,
 
     marsHotel: {
       category_id: categories.mars.id,
-
       title: 'Mars Hotel',
       description: 'some description',
       price: 399,
       image: '/assets/images/mars-hotel-1.jpg',
       invQty: 5
+    },
+    marsShuttle: {
+      category_id: categories.mars.id,
+      title: 'Flight to Mars',
+      description: 'Did you ever dream of stepping on red soil of Mars? All the comforts of home will be offered on this flight',
+      price: 2000,
+      image: '/assets/images/shuttle.jpg',
+      invQty: 10
+    },
+    marsGuide: {
+      category_id: categories.mars.id,
+      title: 'Marvin on Martian',
+      description: 'This makes me very angry, very angry indeed.',
+      price: 60,
+      image: '/assets/images/MartianonMars.jpg',
+      invQty: 2
+    },
+    marsActivity1: {
+      category_id: categories.mars.id,
+      title: 'Immersion in Martian Culture',
+      description: 'You will learn simple language insructions and get to converse with Martians (within safe distance)',
+      price: 500,
+      image: '/assets/images/activity4.jpg',
+      invQty: 3
+    },
+    marsActivity2: {
+      category_id: categories.mars.id,
+      title: 'Extreme Flight on Mars',
+      description: 'Exciting Race on the empty deserts of Mars...we will lend you the aircraft!',
+      price: 2000,
+      image: '/assets/images/activity3.jpg',
+      invQty: 4
+    },
+    marsCar: {
+      category_id: categories.mars.id,
+      title: 'Apollo 3040',
+      description: 'The perfect vehicle that blends into the surroudings.',
+      price: 99,
+      image: '/assets/images/car3.jpg',
+      invQty: 1
+    },
+    titanShuttle: {
+      category_id: categories.titan.id,
+      title: 'Flight to Titan',
+      description: 'Visit the largest moon of Saturn - perfect instagram opportunity of your lifetime',
+      price: 5000,
+      image: '/assets/images/shuttle.jpg',
+      invQty: 6
+    },
+    titanHotel1: {
+      category_id: categories.titan.id,
+      title: 'La Discotheque Casino & Resort',
+      description: 'Enjoy the transluscent glare of intergalactic disco!!!',
+      price: 500,
+      image: '/assets/images/hotel2.jpg',
+      invQty: 4
+    },
+    titanHotel2: {
+      category_id: categories.titan.id,
+      title: 'The Mint Tulip',
+      description: 'B&B Guaranteed to make your stay on Titan feel like home...',
+      price: 350,
+      image: '/assets/images/hotel4.jpg',
+      invQty: 2
+    },
+    titanGuide: {
+      category_id: categories.titan.id,
+      title: 'Chewie',
+      description: 'huuguughghg uughghhhgh uughghhhgh wrrhw uughguughhhghghghhhgh (I welcome you to this star)',
+      price: 70,
+      image: '/assets/images/guide1.jpg',
+      invQty: 3
+    },
+    titanActivity1: {
+      category_id: categories.titan.id,
+      title: 'Star Gazing',
+      description: 'Enjoy a view of the Milky Way and beyond - you can even spy on Earth!',
+      price: 1000,
+      image: '/assets/images/activity1.jpg',
+      invQty: 6
+    },
+    titanActivity2: {
+      category_id: categories.titan.id,
+      title: 'Row Row Row Your Boat',
+      description: 'Boating on the Titan Lakes...enjoy at your risk!',
+      price: 200,
+      image: '/assets/images/activity6.jpg',
+      invQty: 2
+    },
+    neptuneShuttle: {
+      category_id: categories.neptune.id,
+      title: 'Flight to Neptune',
+      description: 'Visit Neptune - the lonely outpost of the Solar System',
+      price: 7000,
+      image: '/assets/images/shuttle.jpg',
+      invQty: 5
+    },
+    neptuneHotel1: {
+      category_id: categories.neptune.id,
+      title: 'The Outer Space',
+      description: 'Hotel and Casino floating at the edge of the Sun\'s reach',
+      price: 600,
+      image: '/assets/images/hotel1.jpg',
+      invQty: 5
+    },
+    neptuneGuide: {
+      category_id: categories.neptune.id,
+      title: 'Wall-E',
+      description: 'EE-VAh??',
+      price: 50,
+      image: '/assets/images/guide2.jpg',
+      invQty: 4
+    },
+    neptuneActivity1: {
+      category_id: categories.neptune.id,
+      title: 'Jump from Space',
+      description: 'If you like danger, this is the sport for you! Jump out from a space aircraft & land on Neptune! (must sign waiver)',
+      price: 600,
+      image: '/assets/images/activity7.jpg',
+      invQty: 2
+    },
+    neptuneActivity2: {
+      category_id: categories.neptune.id,
+      title: 'Ice Ice Baby Bar',
+      description: 'You\'re just tired from the long trip out to space- relax and enjoy the ultimate ice bar experience in the natural ice caverns',
+      price: 99,
+      image: '/assets/images/activity8.jpg',
+      invQty: 4
+    },
+    neptuneCar: {
+      category_id: categories.neptune.id,
+      title: 'Ex MX',
+      description: 'Sleekest ride guaranteed to help you withstand and chase the wildest storms in Neptune',
+      price: 500,
+      image: '/assets/images/car6.jpg',
+      invQty: 1
     }
   })
 )
