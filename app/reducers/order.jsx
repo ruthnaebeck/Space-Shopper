@@ -19,10 +19,11 @@ export default function reducer(order = {items: [{product: {}}]}, action) {
   case GET:
     return action.order
   case REMOVE:
-    return order.items.filter(item =>
-        item.productId !== action.id)
+    const newItems = order.items.filter(item =>
+        item.product_id !== action.id)
+    return { items: newItems }
   case CREATE:
-    return [...order.items, action.order.item]
+    return { items: [...order.items, action.item] }
   default:
     return order
   }

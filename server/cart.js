@@ -36,21 +36,12 @@ module.exports = require('express').Router()
     Item.create(req.body, {include: [Product]})
     .then(item => res.json(item))
     .catch(next)
-  }) // ***** TO DO: Refactor using above 'use' statement **** //
-  .delete('/:pId', (req, res, send) => {
+  })
+  .delete('/:pId', (req, res, next) => {
     var pId = req.params.pId
-    var items = req.session.cart.items
-    if (req.user) {
-      Item.destroy({
-        where: { product_id: pId }
-      })
-        .then(() => res.sendStatus(204))
-    } else {
-      var idx = -1
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].productId === pId) idx = i
-      }
-      items.splice(idx, 1)
-      res.sendStatus(204)
-    }
+    Item.destroy({
+      where: { product_id: pId }
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
   })

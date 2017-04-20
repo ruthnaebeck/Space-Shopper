@@ -5,7 +5,6 @@ import { removeItem } from '../reducers/order'
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.removeSubmit = this.removeSubmit.bind(this)
   }
 
   render() {
@@ -24,16 +23,14 @@ class Cart extends React.Component {
         </thead>
         <tbody>
           {items.map((item) =>
-            <tr key={item.productId}>
+            <tr key={item.id}>
               <td>{item.product.title}</td>
               <td>{item.qty}</td>
               <td>{item.price}</td>
               <td>
-                <button id={item.productId}
-                        onClick={this.removeSubmit}
+                <button onClick={(evt) => this.removeSubmit(evt, item.product_id)}
                         className="btn btn-default btn-xs">
-                  <span id={item.productId}
-                        className="glyphicon glyphicon-trash">
+                  <span className="glyphicon glyphicon-trash">
                   </span>
                 </button>
               </td>
@@ -44,9 +41,9 @@ class Cart extends React.Component {
     </div>
     )
   }
-  removeSubmit(evt) {
+  removeSubmit(evt, productId) {
     evt.stopPropagation()
-    this.props.removeItem(Number(evt.target.id))
+    this.props.removeItem(productId)
   }
 }
 
