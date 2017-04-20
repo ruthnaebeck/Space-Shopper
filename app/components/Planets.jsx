@@ -1,21 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import {Link} from 'react-router'
 // need selectPlanet action-creator/action sets clickedOn planet
-import { Link } from 'react-router';
 
-const Planets = (props) => {
+
+
+
+
+
+export const Planets = (props) => {
+  console.log('props in planets', props.planets)
 
   return (
     <div>
-      {props.planets.map((planet) => {
+      {
+        props.planets.map((planet) => {
         return (<div key={planet.id} className="col-md-4">
-          <Link to={`/api/planets/${planet.id}`}>
-            <span><h3>{planet.name}</h3>
-             <img src={planet.image}/>
+          <Link to={`/planets/${planet.id}`}>
+            <span><h2>{planet.name}</h2>
+             <img src={planet.image} />
             </span>
           </Link>
         </div>)
-      })}
+      })
+      }
     </div>
   )
 }
