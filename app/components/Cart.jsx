@@ -5,7 +5,6 @@ import { removeItem } from '../reducers/order'
 class Cart extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
     this.removeSubmit = this.removeSubmit.bind(this)
   }
 
@@ -41,6 +40,7 @@ class Cart extends React.Component {
             </tr>)}
         </tbody>
       </table>
+      <button>Checkout</button>
     </div>
     )
   }

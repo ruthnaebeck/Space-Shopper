@@ -21,6 +21,7 @@ module.exports = require('express').Router()
       res.status(200).json(req.session.cart)
     }
   })
+  // Will move to single product routes
   .post('/', (req, res, next) => {
     if (req.user) {
       Order.findOrCreate(
