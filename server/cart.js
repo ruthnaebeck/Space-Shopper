@@ -14,28 +14,28 @@ module.exports = require('express').Router()
         },
         include: [{ model: Item, include: [Product] }]
       })
-      .then((order) => {
-        req.cart = order
-        next()
-      })
-      .catch(next)
+        .then((order) => {
+          req.cart = order
+          next()
+        })
+        .catch(next)
     } else {
-      Order.create({status: 'pending'})
-      .then((order) => {
-        req.cart = order
-        req.session.cartId = order.id
-        next()
-      })
-      .catch(next)
+      Order.create({ status: 'pending' })
+        .then((order) => {
+          req.cart = order
+          req.session.cartId = order.id
+          next()
+        })
+        .catch(next)
     }
   })
   .get('/', (req, res, next) => {
     res.status(200).json(req.cart)
   })
   .post('/', (req, res, next) => {
-    Item.create(req.body, {include: [Product]})
-    .then(item => res.json(item))
-    .catch(next)
+    Item.create(req.body, { include: [Product] })
+      .then(item => res.json(item))
+      .catch(next)
   }) // ***** TO DO: Refactor using above 'use' statement **** //
   .delete('/:pId', (req, res, send) => {
     var pId = req.params.pId
@@ -53,4 +53,13 @@ module.exports = require('express').Router()
       items.splice(idx, 1)
       res.sendStatus(204)
     }
+  })
+  .post('/checkout', (req, res, next) => {
+    Order.findOne({
+      where: {
+        id: req.body.id
+      },
+      include: [{ model: Item, include: [Product] }]
+    })
+      .then(order => order.update({ status: 'complete' }))
   })

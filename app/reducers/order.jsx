@@ -5,12 +5,14 @@ import axios from 'axios'
 const GET = 'GET_ORDER'
 const REMOVE = 'REMOVE_ITEM'
 const CREATE = 'CREATE_ITEM'
+const COMPLETE = 'COMPLETE_ORDER'
 
 /* ------------- ACTION CREATER ---------------- */
 
 const get = order => ({type: GET, order})
 const remove = id => ({type: REMOVE, id})
 const create = item => ({type: CREATE, item})
+const complete = order => ({type: COMPLETE, order})
 
 /* ------------- REDUCERS ---------------- */
 
@@ -22,7 +24,9 @@ export default function reducer(order = {items: [{product: {}}]}, action) {
     return order.items.filter(item =>
         item.productId !== action.id)
   case CREATE:
-    return [...order.items, action.order.item]
+    return {items: [...order.items, action.item]}
+  case COMPLETE:
+    return action.order
   default:
     return order
   }
@@ -49,4 +53,10 @@ export const createItem = item => dispatch => {
   axios.post('/api/cart', item)
   .then(res => dispatch(create(res.data)))
   .catch(err => console.error('error adding item to cart', err))
+}
+
+export const completeOrder = order => dispatch => {
+  axios.post('/api/cart/checkout', order)
+  .then(res => dispatch(complete(res.data)))
+  .catch(err => console.error('error checking out', err))
 }
