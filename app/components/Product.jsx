@@ -16,9 +16,9 @@ export const Product = (props) => {
           </div>
       </div>
       <div className="col-md-6">
-        <h5>Description: </h5>
-        <p>{product.description}</p>
-        <label> Quantity </label>
+        <h3>Description: </h3>
+          <p>{product.description}</p>
+        <label> Quantity: </label>
         <select>
           <option> </option>
           {generateOptions(qty)}
