@@ -21,14 +21,18 @@ import { getProducts } from './reducers/products'
 import { fetchOrder } from './reducers/order'
 import { getReviews } from './reducers/reviews'
 
-// TODO ******* load Cart onEnter
-const onAppEnter = () => {
-  axios.get('/api/planets') // test later after db
+const fetchPlanets = () => {
+  axios.get('/api/planets')
     .then(function(res) {
       return res.data
     })
     .then((planets) => store.dispatch(getPlanets(planets)))
     .catch()
+}
+
+const onAppEnter = () => {
+  fetchPlanets()
+  fetchCart()
 }
 
 const onPlanetEnter = ({params: {categoryId}}) => {
@@ -49,8 +53,8 @@ const onProductEnter = ({params: {productId}}) => {
     .catch()
 }
 
-const onCartEnter = function(nextRouterSTate) {
-  store.dispatch(fetchOrder()) // will need to pass in order Id
+const fetchCart = function(nextRouterSTate) {
+  store.dispatch(fetchOrder())
 }
 
 render(
@@ -61,7 +65,7 @@ render(
         <Route path="/planets" component={Planets} />
         <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
         <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
-        <Route path="/cart" component={Cart} onEnter={onCartEnter} />
+        <Route path="/cart" component={Cart} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
