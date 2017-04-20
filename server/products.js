@@ -13,7 +13,7 @@ module.exports = require('express').Router()
       },
       include: [
         {
-          model: User
+          model: User // think about Scope?
         }
       ]
     })

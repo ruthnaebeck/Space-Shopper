@@ -1,11 +1,10 @@
-p {
-  font-size: 20px;
+html, body {
+  background: black;
 }
 
-.productImage {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+p {
+  font-size: 20px;
+  color: white;
 }
 
 .planetImage {
@@ -24,6 +23,20 @@ p {
 }
 
 .products {
-  height: 250px;
-  margin: 40px 0px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.products-product {
+  width: 33vw;
+  height: 33vw;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.productTitle {
+  text-shadow: #2780e3 2px 2px 2px;
+  color: white;
+  margin: 0;
 }

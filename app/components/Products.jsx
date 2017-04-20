@@ -7,13 +7,11 @@ import { selectProduct } from '../reducers/products'
 export const Products = (props) => {
   console.log('props in products', props)
   return (
-    <div>
+    <div className="products">
       {props.products.map((product) => {
-        return (<div key={product.id} className= "products col-md-4">
+        return (<div key={product.id} className= "products-product" style={{ backgroundImage: `url(${product.image})` }}>
           <Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
-            <span><h2>{product.title}</h2>
-             <img className="productImage" src={product.image}/>
-            </span>
+            <h2 className="productTitle">{product.title}</h2>
           </Link>
         </div>)
       })}
