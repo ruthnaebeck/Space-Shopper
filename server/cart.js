@@ -8,14 +8,19 @@ const Item = db.model('items')
 module.exports = require('express').Router()
   .use((req, res, next) => {
     if (req.session.cartId) {
-      Order.findById(req.session.cartId, {include: [Item, Product]})
+      Order.findOne({
+        where: {
+          id: req.session.cartId
+        },
+        include: [{ model: Item, include: [Product] }]
+      })
       .then((order) => {
         req.cart = order
         next()
       })
       .catch(next)
     } else {
-      Order.create({status: 'pending'}, {include: [Item, Product]})
+      Order.create({status: 'pending'})
       .then((order) => {
         req.cart = order
         req.session.cartId = order.id
@@ -27,10 +32,9 @@ module.exports = require('express').Router()
   .get('/', (req, res, next) => {
     res.status(200).json(req.cart)
   })
-  // Will move to single product routes
   .post('/', (req, res, next) => {
-    req.cart.addItem(req.body)
-    .then(order => res.json(order))
+    Item.create(req.body, {include: [Product]})
+    .then(item => res.json(item))
     .catch(next)
   }) // ***** TO DO: Refactor using above 'use' statement **** //
   .delete('/:pId', (req, res, send) => {
