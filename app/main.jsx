@@ -21,6 +21,7 @@ import { getProducts } from './reducers/products'
 import { fetchOrder } from './reducers/order'
 import { getReviews } from './reducers/reviews'
 
+// TODO ******* load Cart onEnter
 const onAppEnter = () => {
   axios.get('/api/planets') // test later after db
     .then(function(res) {

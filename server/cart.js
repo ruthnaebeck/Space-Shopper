@@ -6,44 +6,33 @@ const Order = db.model('orders')
 const Item = db.model('items')
 
 module.exports = require('express').Router()
-  .get('/', (req, res, next) => {
-    if (req.user) {
-      Order.findOne({
-        where: {
-          user_id: req.user.id,
-          status: 'pending'
-        },
-        include: [Item, Product]
+  .use((req, res, next) => {
+    if (req.session.cartId) {
+      Order.findById(req.session.cartId, {include: [Item, Product]})
+      .then((order) => {
+        req.cart = order
+        next()
       })
-        .then(order => res.json(order))
-        .catch(next)
+      .catch(next)
     } else {
-      res.status(200).json(req.session.cart)
+      Order.create({status: 'pending'}, {include: [Item, Product]})
+      .then((order) => {
+        req.cart = order
+        req.session.cartId = order.id
+        next()
+      })
+      .catch(next)
     }
+  })
+  .get('/', (req, res, next) => {
+    res.status(200).json(req.cart)
   })
   // Will move to single product routes
   .post('/', (req, res, next) => {
-    if (req.user) {
-      Order.findOrCreate(
-        req.body,
-        {
-          where: {
-            user_id: req.user.id,
-            status: 'pending'
-          },
-          include: [Item]
-        }
-      )
-      .then(order => res.json(order))
-      .catch(next)
-    } else {
-      if (req.session.cart) {
-        req.session.cart.push(req.body)
-      } else {
-        req.session.cart = [req.body]
-      }
-    }
-  })
+    req.cart.addItem(req.body)
+    .then(order => res.json(order))
+    .catch(next)
+  }) // ***** TO DO: Refactor using above 'use' statement **** //
   .delete('/:pId', (req, res, send) => {
     var pId = req.params.pId
     var items = req.session.cart.items

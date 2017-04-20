@@ -52,7 +52,7 @@ class Cart extends React.Component {
 
 /* ------------- CONTAINER --------------- */
 
-const mapStateToProps = (order) => (order)
+const mapStateToProps = ({order}) => ({order})
 const mapDispatch = { removeItem }
 
 export default connect(mapStateToProps, mapDispatch)(Cart)
