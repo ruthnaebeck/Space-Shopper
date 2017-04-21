@@ -37,7 +37,7 @@ module.exports = require('express').Router()
     res.status(200).json(req.cart)
   })
   .post('/', (req, res, next) => {
-    Item.create(req.body, {include: [Product]})
+    Item.create(req.body)
     .then(item => item)
     .then(item =>
       Item.findOne({
