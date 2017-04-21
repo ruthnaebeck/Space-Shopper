@@ -9,7 +9,7 @@ import {Link} from 'react-router'
 
 
 export const Planets = (props) => {
-  console.log('props in planets', props.planets)
+
 
   return (
     <div>

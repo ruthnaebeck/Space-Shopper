@@ -14,6 +14,8 @@ import Products from './components/Products'
 import Product from './components/Product'
 import NotFound from './components/NotFound'
 import Cart from './components/Cart'
+import Login from './components/Login'
+import MyAccount from './components/MyAccount'
 
 // dispatchers
 import { getPlanets } from './reducers/planets'
@@ -66,6 +68,8 @@ render(
         <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
         <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
         <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Route path="/myaccount" component={MyAccount} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
