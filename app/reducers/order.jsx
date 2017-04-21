@@ -55,7 +55,8 @@ export const createItem = item => dispatch => {
   .catch(err => console.error('error adding item to cart', err))
 }
 
-export const completeOrder = order => dispatch => {
+// send the order / send the email from form
+export const completeOrder = (order) => dispatch => {
   axios.post('/api/cart/checkout', order)
   .then(res => dispatch(complete(res.data)))
   .catch(err => console.error('error checking out', err))

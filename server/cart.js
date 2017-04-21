@@ -78,9 +78,11 @@ module.exports = require('express').Router()
           const newQty = currentQty - item.qty
           product.update({invQty: newQty})
         })
+        .catch(next)
       })
     })
-    // ***** TODO: add redirect to 'Your Order has been Submitted page / send email to user' ***** //
     .then(order => res.sendStatus(204))
     .catch(next)
   })
+
+    // ***** TODO: add redirect to 'Your Order has been Submitted page / send email to user' ***** //
