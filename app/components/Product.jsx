@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import { createItem } from '../reducers/order'
 
 class Product extends React.Component {
@@ -71,12 +71,14 @@ class Product extends React.Component {
     const qty = this.state.selectedQty
     const product = this.props.selectedProduct
     const itemToAdd = {
+      product: {title: product.title},
       product_id: product.id,
       price: product.price,
       qty: qty,
       order_id: this.props.order.id
     }
     this.props.createItem(itemToAdd)
+    browserHistory.push('/cart')
   }
 }
 
