@@ -29,7 +29,8 @@ class Cart extends React.Component {
               <td>{item.qty}</td>
               <td>{item.price}</td>
               <td>
-                <button onClick={(evt) => this.removeSubmit(evt, item.product_id)}
+                <button onClick={(evt) =>
+                  this.removeSubmit(evt, item.order_id, item.product_id)}
                         className="btn btn-default btn-xs">
                   <span className="glyphicon glyphicon-trash">
                   </span>
@@ -42,9 +43,9 @@ class Cart extends React.Component {
     </div>
     )
   }
-  removeSubmit(evt, productId) {
+  removeSubmit(evt, oId, pId) {
     evt.stopPropagation()
-    this.props.removeItem(productId)
+    this.props.removeItem(oId, pId)
   }
 }
 

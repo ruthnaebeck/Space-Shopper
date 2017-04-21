@@ -16,6 +16,10 @@ module.exports = require('express').Router()
       })
       .then((order) => {
         req.cart = order
+        // Receiving warning message:
+        // a promise was created in a handler but was not returned from it
+        // According to docs, it's because we aren't returning:
+        // http://bluebirdjs.com/docs/warning-explanations.html#warning-a-promise-was-created-in-a-handler-but-was-not-returned-from-it
         next()
       })
       .catch(next)
@@ -34,13 +38,22 @@ module.exports = require('express').Router()
   })
   .post('/', (req, res, next) => {
     Item.create(req.body, {include: [Product]})
+    .then(item => item)
+    .then(item =>
+      Item.findOne({
+        where: {id: item.id},
+        include: [Product]
+      })
+    )
     .then(item => res.json(item))
     .catch(next)
   })
-  .delete('/:pId', (req, res, next) => {
-    var pId = req.params.pId
+  .delete('/:oId/:pId', (req, res, next) => {
     Item.destroy({
-      where: { product_id: pId }
+      where: {
+        product_id: req.params.pId,
+        order_id: req.params.oId
+      }
     })
     .then(() => res.sendStatus(204))
     .catch(next)

@@ -71,7 +71,6 @@ class Product extends React.Component {
     const qty = this.state.selectedQty
     const product = this.props.selectedProduct
     const itemToAdd = {
-      product: {title: product.title},
       product_id: product.id,
       price: product.price,
       qty: qty,
