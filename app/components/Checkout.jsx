@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router'
 import { completeOrder } from '../reducers/order'
 
-
 class Checkout extends React.Component {
     //  (props) => {
 
@@ -39,12 +38,15 @@ class Checkout extends React.Component {
 
     handleSubmit(e) {
         e ? e.preventDefault() : null;
-        this.props.whenSubmitted(this.props.order)
+        this.props.completeOrder(this.props.order)
 
     }
 
-    totalPrice(items){
-        return items.reduce((acc, item) => acc + item.price, 0)
+    totalPrice(items) {
+        if (items) {
+            return items.reduce((acc, item) => acc + item.price, 0)
+
+        }
     }
 
 
@@ -63,7 +65,7 @@ class Checkout extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.items.map((item) =>
+                            {this.props.items && this.props.items.map((item) =>
                                 <tr key={item.productId}>
                                     <td>{item.product.title}</td>
                                     <td>{item.qty}</td>
@@ -222,13 +224,6 @@ const mapStateToProps = (state) => {
         items: state.order.items
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-
-        whenSubmitted(orderInfo) {
-            store.dispatch(completeOrder(orderInfo))
-        }
-    }
-}
+const mapDispatchToProps = { completeOrder }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

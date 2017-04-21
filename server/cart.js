@@ -61,5 +61,26 @@ module.exports = require('express').Router()
       },
       include: [{ model: Item, include: [Product] }]
     })
-      .then(order => order.update({ status: 'complete' }))
+    .then(order => {
+      req.session.cartId = null // this is resetting the cartId
+      req.cart = null
+      return order.update({ status: 'complete' })
+    })
+    .then((order) => {
+      order.items.forEach((item) => {
+        Product.find({
+          where: {
+            id: item.product_id
+          }
+        })
+        .then((product) => {
+          const currentQty = product.invQty
+          const newQty = currentQty - item.qty
+          product.update({invQty: newQty})
+        })
+      })
+    })
+    // ***** TODO: add redirect to 'Your Order has been Submitted page / send email to user' ***** //
+    .then(order => res.sendStatus(204))
+    .catch(next)
   })
