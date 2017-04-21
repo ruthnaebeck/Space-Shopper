@@ -1,7 +1,7 @@
 import React from 'react'
 import Cart from './Cart'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router'
+import { Link } from 'react-router'
 import { completeOrder } from '../reducers/order'
 
 class Checkout extends React.Component {
@@ -13,27 +13,58 @@ class Checkout extends React.Component {
         super(props)
         this.state = {
             // add states
-            name: '',
-            streetAddress: '',
-            city: '',
-            state: '',
-            zip: '',
-            ccnType: '',
-            ccnNum: '',
-            expMonth: '',
-            expYear: '',
-            cvv: ''
+            name: {
+                value: '',
+                filledIn: false,
+            },
+            streetAddress: {
+                value: '',
+                filledIn: false,
+            },
+            city: {
+                value: '',
+                filledIn: false,
+            },
+            state: {
+                value: '',
+                filledIn: false,
+            },
+            zip: {
+                value: '',
+                filledIn: false,
+            },
+            ccnType: {
+                value: '',
+                filledIn: false,
+            },
+            ccnNum: {
+                value: '',
+                filledIn: false,
+            },
+            expMonth: {
+                value: '',
+                filledIn: false,
+            },
+            expYear: {
+                value: '',
+                filledIn: false,
+            },
+            cvv: {
+                value: '',
+                filledIn: false,
+            }
 
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.totalPrice = this.totalPrice.bind(this)
+        this.disableCheck = this.disableCheck.bind(this)
     }
 
 
 
     handleChange(e) {
-        this.setState({ [e.target.name]: e.target.value })
+        this.setState({ [e.target.name]: { value: e.target.value, filledIn: true } })
     }
 
     handleSubmit(e) {
@@ -48,9 +79,23 @@ class Checkout extends React.Component {
 
         }
     }
+    
+    disableCheck() {
+        for(var key in this.state){
+            if(!this.state[key].filledIn){
+                return true
+            } 
+        }
+        return false
+    }
 
 
     render() {
+
+        // let warning = '';
+
+        // if (!inputValue && dirty) warning = 'You must enter a name';
+
         return (
             <div>
 
@@ -85,67 +130,73 @@ class Checkout extends React.Component {
                     <fieldset>
                         <legend>Payment Details</legend>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Name</label>
+                            <label className="col-xs-2 control-label">* Name</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="name"
                                     onChange={this.handleChange}
+                                    value={this.state.name.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Street Address</label>
+                            <label className="col-xs-2 control-label">* Street Address</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="streetAddress"
                                     onChange={this.handleChange}
+                                    value={this.state.streetAddress.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">City</label>
+                            <label className="col-xs-2 control-label">* City</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="city"
                                     onChange={this.handleChange}
+                                    value={this.state.city.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">State</label>
+                            <label className="col-xs-2 control-label">* State</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="state"
                                     onChange={this.handleChange}
+                                    value={this.state.state.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Zip Code</label>
+                            <label className="col-xs-2 control-label">* Zip Code</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="zip"
                                     onChange={this.handleChange}
+                                    value={this.state.zip.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Credit Card Type</label>
+                            <label className="col-xs-2 control-label">* Credit Card Type</label>
                             <div className="col-xs-10">
                                 <select
                                     type="text"
                                     name="ccnType"
                                     onChange={this.handleChange}
+                                    value={this.state.ccnType.value}
                                 >
                                     <option></option>
                                     <option>MasterCard</option>
@@ -155,7 +206,7 @@ class Checkout extends React.Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Credit Card Number</label>
+                            <label className="col-xs-2 control-label">* Credit Card Number</label>
                             <div className="col-xs-10">
                                 <input
                                     onChange={this.handleCCN}
@@ -163,49 +214,60 @@ class Checkout extends React.Component {
                                     type="text"
                                     name="ccnNum"
                                     onChange={this.handleChange}
+                                    value={this.state.ccnNum.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Expiration Month</label>
+                            <label className="col-xs-2 control-label">* Expiration Month</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="expMonth"
                                     onChange={this.handleChange}
+                                    value={this.state.expMonth.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">Expiration Year</label>
+                            <label className="col-xs-2 control-label">* Expiration Year</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="expYear"
                                     onChange={this.handleChange}
+                                    value={this.state.expYear.value}
                                 />
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-xs-2 control-label">CVV</label>
+                            <label className="col-xs-2 control-label">* CVV</label>
                             <div className="col-xs-10">
                                 <input
                                     className="form-control"
                                     type="text"
                                     name="cvv"
                                     onChange={this.handleChange}
+                                    value={this.state.cvv.value}
                                 />
                             </div>
                         </div>
+                        <div>
+                            <p>* Required field</p>
+                        </div>
                         <div className="form-group">
                             <div className="col-xs-10 col-xs-offset-2">
-                                <button
-                                    type="submit"
-                                    className="btn btn-success">
-                                    Submit Order
-                            </button>
+                                <Link to={'/orderConfirmation'}>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success"
+                                        disabled={ this.disableCheck() }
+                                    >
+                                        Submit Order
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </fieldset>

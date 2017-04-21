@@ -15,6 +15,7 @@ import Product from './components/Product'
 import NotFound from './components/NotFound'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
+import ThankYou from './components/ThankYou'
 
 // dispatchers
 import { getPlanets } from './reducers/planets'
@@ -68,6 +69,7 @@ render(
         <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
         <Route path="/cart" component={Cart} />
         <Route path='/checkout' component={Checkout} />
+        <Route path='/orderConfirmation' component={ThankYou} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
