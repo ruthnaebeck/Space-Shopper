@@ -15,14 +15,14 @@ module.exports = require('express').Router()
         include: [{ model: Item, include: [Product] }]
       })
         .then((order) => {
-          req.cart = order
+          req.cart = order // add req.session.user = req.user (passed down to subsequent routes)
           next()
         })
         .catch(next)
     } else {
       Order.create({ status: 'pending' })
         .then((order) => {
-          req.cart = order
+          req.cart = order // add req.session.user = req.user (passed down to subsequent routes)
           req.session.cartId = order.id
           next()
         })
@@ -36,7 +36,7 @@ module.exports = require('express').Router()
     Item.create(req.body, { include: [Product] })
       .then(item => res.json(item))
       .catch(next)
-  }) // ***** TO DO: Refactor using above 'use' statement **** //
+  })
   .delete('/:pId', (req, res, send) => {
     var pId = req.params.pId
     var items = req.session.cart.items
@@ -63,8 +63,8 @@ module.exports = require('express').Router()
     })
     .then(order => {
       req.session.cartId = null // this is resetting the cartId
-      req.cart = null
-      return order.update({ status: 'complete' })
+      req.cart = null // this is clearing the cart
+      return order.update({ status: 'complete' }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
     })
     .then((order) => {
       order.items.forEach((item) => {
@@ -85,4 +85,9 @@ module.exports = require('express').Router()
     .catch(next)
   })
 
-    // ***** TODO: add redirect to 'Your Order has been Submitted page / send email to user' ***** //
+    // ***** TODO **** //
+    // ***** (if not logged in) create user with req.body from checkout page ***** //
+    // ***** (if logged in) find user & associate to the order ***** //
+
+    // LOW PRIORITY
+    // ***** TODO: send email to user after submitted ***** //

@@ -55,9 +55,9 @@ export const createItem = item => dispatch => {
   .catch(err => console.error('error adding item to cart', err))
 }
 
-// send the order / send the email from form
+// send the order / send the user's email from form to create new user
 export const completeOrder = (order) => dispatch => {
-  axios.post('/api/cart/checkout', order)
+  axios.post('/api/cart/checkout', order) // order = req.body (need to add email here)
   .then(res => dispatch(complete(res.data)))
   .catch(err => console.error('error checking out', err))
 }
