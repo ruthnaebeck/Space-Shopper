@@ -63,7 +63,6 @@ module.exports = require('express').Router()
   .post('/checkout', (req, res, next) => {
     // req.user = return User.create()
     if(!req.user){
-        const curOrder = order;
         User.create({
           accountType: 'guest',
           email: req.body.email.value
@@ -84,7 +83,7 @@ module.exports = require('express').Router()
       // console.log('order', order);
       req.session.cartId = null // this is resetting the cartId
       req.cart = null // this is clearing the cart
-      return order.update({ status: 'complete' }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
+      return order.update({ status: 'complete', user_id: req.user.id }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
     })
     .then((order) => {
       order.items.forEach((item) => {
@@ -104,7 +103,6 @@ module.exports = require('express').Router()
     .then(order => {
       // console.log('req - looking for user', req.user)
       //req.user is undefined bc no one's logged in
-      order.setUser(req.user.id)
       res.sendStatus(204)
     })
     .catch(next)
