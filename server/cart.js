@@ -4,10 +4,11 @@ const db = require('APP/db')
 const Product = db.model('products')
 const Order = db.model('orders')
 const Item = db.model('items')
+const User = db.model('users')
 
 module.exports = require('express').Router()
   .use((req, res, next) => {
-    console.log('req.session in cart routes', req.session)
+    // console.log('req.session in cart routes', req.session)
     if (req.session.cartId) {
       Order.findOne({
         where: {
@@ -60,13 +61,27 @@ module.exports = require('express').Router()
     .catch(next)
   })
   .post('/checkout', (req, res, next) => {
-    Order.findOne({
+    // req.user = return User.create()
+    if(!req.user){
+        const curOrder = order;
+        User.create({
+          accountType: 'guest',
+          email: req.body.email.value
+        })
+        .then(user => {
+          req.user = user
+        })
+        .catch(next)
+      }
+    // console.log('req.body in backend route', req.body)
+    return Order.findOne({
       where: {
-        id: req.body.id
+        id: req.session.cartId
       },
       include: [{ model: Item, include: [Product] }]
     })
     .then(order => {
+      // console.log('order', order);
       req.session.cartId = null // this is resetting the cartId
       req.cart = null // this is clearing the cart
       return order.update({ status: 'complete' }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
@@ -86,7 +101,12 @@ module.exports = require('express').Router()
         .catch(next)
       })
     })
-    .then(order => res.sendStatus(204))
+    .then(order => {
+      // console.log('req - looking for user', req.user)
+      //req.user is undefined bc no one's logged in
+      order.setUser(req.user.id)
+      res.sendStatus(204)
+    })
     .catch(next)
   })
 
