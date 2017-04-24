@@ -38,6 +38,7 @@ export default function reducer(order = {items: [{product: {}}]}, action) {
 export const fetchOrder = (id) => dispatch => {
   axios.get(`/api/cart`)
   .then(res => {
+    console.log('resdata in fetchorder', res.data)
     dispatch(get(res.data))
   })
   .catch(err => console.error('Error fetchItems', err))

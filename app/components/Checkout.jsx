@@ -73,7 +73,7 @@ class Checkout extends React.Component {
 
   handleSubmit(e) {
     e ? e.preventDefault() : null
-    this.props.completeOrder(this.props.order)
+    this.props.complete(this.props.order)
     browserHistory.push('/orderConfirmation')
   }
 
@@ -293,6 +293,12 @@ const mapStateToProps = (state) => {
         items: state.order.items
     }
 }
-const mapDispatchToProps = { completeOrder }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        complete(order){
+            dispatch(completeOrder(order))
+        }
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

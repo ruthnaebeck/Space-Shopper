@@ -7,6 +7,7 @@ const Item = db.model('items')
 
 module.exports = require('express').Router()
   .use((req, res, next) => {
+    console.log('req.session in cart routes', req.session)
     if (req.session.cartId) {
       Order.findOne({
         where: {
