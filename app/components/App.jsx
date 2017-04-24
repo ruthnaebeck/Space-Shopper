@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import Planets from './Planets'
 
 const App = ({ children, user }) => {
   return (
