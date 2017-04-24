@@ -14,11 +14,15 @@ module.exports = require('express').Router()
         },
         include: [{ model: Item, include: [Product] }]
       })
-        .then((order) => {
-          req.cart = order
-          next()
-        })
-        .catch(next)
+      .then((order) => {
+        req.cart = order
+        // Receiving warning message:
+        // a promise was created in a handler but was not returned from it
+        // According to docs, it's because we aren't returning:
+        // http://bluebirdjs.com/docs/warning-explanations.html#warning-a-promise-was-created-in-a-handler-but-was-not-returned-from-it
+        next()
+      })
+      .catch(next)
     } else {
       Order.create({ status: 'pending' })
         .then((order) => {
@@ -33,26 +37,26 @@ module.exports = require('express').Router()
     res.status(200).json(req.cart)
   })
   .post('/', (req, res, next) => {
-    Item.create(req.body, { include: [Product] })
-      .then(item => res.json(item))
-      .catch(next)
-  }) // ***** TO DO: Refactor using above 'use' statement **** //
-  .delete('/:pId', (req, res, send) => {
-    var pId = req.params.pId
-    var items = req.session.cart.items
-    if (req.user) {
-      Item.destroy({
-        where: { product_id: pId }
+    Item.create(req.body)
+    .then(item => item)
+    .then(item =>
+      Item.findOne({
+        where: {id: item.id},
+        include: [Product]
       })
-        .then(() => res.sendStatus(204))
-    } else {
-      var idx = -1
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].productId === pId) idx = i
+    )
+    .then(item => res.json(item))
+    .catch(next)
+  })
+  .delete('/:oId/:pId', (req, res, next) => {
+    Item.destroy({
+      where: {
+        product_id: req.params.pId,
+        order_id: req.params.oId
       }
-      items.splice(idx, 1)
-      res.sendStatus(204)
-    }
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
   })
   .post('/checkout', (req, res, next) => {
     Order.findOne({
