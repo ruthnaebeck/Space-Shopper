@@ -22,7 +22,7 @@ module.exports = {
     "one-var": "off",
     "new-parens": "off",
     "indent": ["error", 2, {SwitchCase: 0}],
-    "arrow-body-style": ["warn", "as-needed"],
+    "arrow-body-style": ["off"],
 
     "no-unused-vars": "off",
     "react/jsx-uses-react": "error",
