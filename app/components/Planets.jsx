@@ -1,16 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {Link} from 'react-router'
-// need selectPlanet action-creator/action sets clickedOn planet
-
-
-
-
 
 
 export const Planets = (props) => {
-  console.log('props in planets', props.planets)
-
   return (
     <div>
       {
@@ -28,22 +21,10 @@ export const Planets = (props) => {
   )
 }
 
-// TODOS HERE:
-// - for <Link> {/*insert link to one planet*/}
-// - for <img /> {/*inset image src of planet*/}
+const mapStateToProps = ({planets}) => ({planets})
 
-
-const mapStateToProps = (state) => {
-  // will need to check our state once connected to DB
-  return {
-    planets: state.planets.planets,
-  }
-}
-
-// const mapDispatchToProps = (dispatch) => {
-// }
+const mapDispatchToProps = null
 
 export default connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
   )(Planets)
-
