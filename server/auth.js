@@ -126,15 +126,27 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 // auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
 
 auth.post('/login/local', passport.authenticate('local'), function(req, res, next) {
-  Order.update({
-    user_id: req.user.id
-  }, {
+  Order.findOne({
     where: {
-      id: req.session.cartId
+      user_id: req.user.id,
+      status: 'pending'
+    }
+  }).then(order => {
+    if (order) {
+      req.session.cartId = order.id
+      res.json(order)
+    } else {
+      return Order.update({
+        user_id: req.user.id
+      }, {
+        where: {
+          id: req.session.cartId
+        }
+      })
+      .then(order => res.sendStatus(204))
+      .catch(next)
     }
   })
-  .then(order => res.sendStatus(204))
-  .catch(next)
 })
 
 // GET requests for OAuth login:
