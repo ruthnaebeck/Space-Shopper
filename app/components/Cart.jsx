@@ -11,7 +11,7 @@ class Cart extends React.Component {
     console.log('props in cart', this.props)
     const items = this.props.order.items || []
     return (
-    <div>
+    <div className="cart">
       <h3>Shopping Cart</h3>
       <table className="table">
         <thead>
@@ -39,7 +39,7 @@ class Cart extends React.Component {
             </tr>)}
         </tbody>
       </table>
-      <button>Checkout</button>
+      <button className="btn-default">Checkout</button>
     </div>
     )
   }
