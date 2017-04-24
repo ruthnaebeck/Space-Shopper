@@ -4,7 +4,7 @@ const Product = db.model('products')
 
 module.exports = require('express').Router()
   .get('/', (req, res, next) => {
-    console.log('here?')
+    console.log('this is req.user?', req.user)
     Category.findAll({})
         .then(planets => {
           res.json(planets)
