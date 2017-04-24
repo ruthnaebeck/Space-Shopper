@@ -1,7 +1,7 @@
 import React from 'react'
 import Cart from './Cart'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import { completeOrder } from '../reducers/order'
 
 class Checkout extends React.Component {
@@ -14,6 +14,10 @@ class Checkout extends React.Component {
         this.state = {
             // add states
             name: {
+                value: '',
+                filledIn: false,
+            },
+            email: {
                 value: '',
                 filledIn: false,
             },
@@ -63,39 +67,33 @@ class Checkout extends React.Component {
 
 
 
-    handleChange(e) {
-        this.setState({ [e.target.name]: { value: e.target.value, filledIn: true } })
-    }
+  handleChange(e) {
+    this.setState({ [e.target.name]: { value: e.target.value, filledIn: true } })
+  }
 
-    handleSubmit(e) {
-        e ? e.preventDefault() : null;
-        this.props.completeOrder(this.props.order)
+  handleSubmit(e) {
+    e ? e.preventDefault() : null
+    this.props.completeOrder(this.props.order)
+    browserHistory.push('/orderConfirmation')
+  }
 
+  totalPrice(items) {
+    if (items) {
+      return items.reduce((acc, item) => acc + item.price, 0)
     }
+  }
 
-    totalPrice(items) {
-        if (items) {
-            return items.reduce((acc, item) => acc + item.price, 0)
-
-        }
+  disableCheck() {
+    for (var key in this.state) {
+      if (!this.state[key].filledIn) {
+        return true
+      }
     }
-    
-    disableCheck() {
-        for(var key in this.state){
-            if(!this.state[key].filledIn){
-                return true
-            } 
-        }
-        return false
-    }
+    return false
+  }
 
 
     render() {
-
-        // let warning = '';
-
-        // if (!inputValue && dirty) warning = 'You must enter a name';
-
         return (
             <div>
 
@@ -138,6 +136,18 @@ class Checkout extends React.Component {
                                     name="name"
                                     onChange={this.handleChange}
                                     value={this.state.name.value}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-xs-2 control-label">* Email</label>
+                            <div className="col-xs-10">
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="email"
+                                    onChange={this.handleChange}
+                                    value={this.state.email.value}
                                 />
                             </div>
                         </div>
@@ -259,7 +269,6 @@ class Checkout extends React.Component {
                         </div>
                         <div className="form-group">
                             <div className="col-xs-10 col-xs-offset-2">
-                                <Link to={'/orderConfirmation'}>
                                     <button
                                         type="submit"
                                         className="btn btn-success"
@@ -267,7 +276,6 @@ class Checkout extends React.Component {
                                     >
                                         Submit Order
                                     </button>
-                                </Link>
                             </div>
                         </div>
                     </fieldset>
@@ -280,7 +288,6 @@ class Checkout extends React.Component {
 
 
 const mapStateToProps = (state) => {
-
     return {
         order: state.order,
         items: state.order.items

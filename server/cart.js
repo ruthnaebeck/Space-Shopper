@@ -26,7 +26,7 @@ module.exports = require('express').Router()
     } else {
       Order.create({ status: 'pending' })
         .then((order) => {
-          req.cart = order
+          req.cart = order // add req.session.user = req.user (passed down to subsequent routes)
           req.session.cartId = order.id
           next()
         })
@@ -67,8 +67,8 @@ module.exports = require('express').Router()
     })
     .then(order => {
       req.session.cartId = null // this is resetting the cartId
-      req.cart = null
-      return order.update({ status: 'complete' })
+      req.cart = null // this is clearing the cart
+      return order.update({ status: 'complete' }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
     })
     .then((order) => {
       order.items.forEach((item) => {
@@ -82,9 +82,16 @@ module.exports = require('express').Router()
           const newQty = currentQty - item.qty
           product.update({invQty: newQty})
         })
+        .catch(next)
       })
     })
-    // ***** TODO: add redirect to 'Your Order has been Submitted page / send email to user' ***** //
     .then(order => res.sendStatus(204))
     .catch(next)
   })
+
+    // ***** TODO **** //
+    // ***** (if not logged in) create user with req.body from checkout page ***** //
+    // ***** (if logged in) find user & associate to the order ***** //
+
+    // LOW PRIORITY
+    // ***** TODO: send email to user after submitted ***** //
