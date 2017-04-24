@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 const App = ({ children, user }) => {
-
   return (
     <div>
         <nav className="navbar navbar-default">

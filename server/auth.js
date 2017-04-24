@@ -123,7 +123,9 @@ passport.use(new (require('passport-local').Strategy)(
 auth.get('/whoami', (req, res) => res.send(req.user))
 
 // POST requests for local login:
-auth.post('/login/local', passport.authenticate('local'), function(req, res) {
+// auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
+
+auth.post('/login/local', passport.authenticate('local'), function(req, res, next) {
   Order.update({
     user_id: req.user.id
   }, {
@@ -131,6 +133,8 @@ auth.post('/login/local', passport.authenticate('local'), function(req, res) {
       id: req.session.cartId
     }
   })
+  .then(order => res.sendStatus(204))
+  .catch(next)
 })
 
 // GET requests for OAuth login:
