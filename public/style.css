@@ -1,5 +1,5 @@
-html, body {
-  background: black;
+body {
+  background-image: url('/assets/images/star_background.jpg')
 }
 
 table,  {
@@ -56,6 +56,11 @@ p {
 }
 
 .cart, .product {
+  color: white
+}
+
+h1 {
+  font-family: "Atomic Age";
   color: white
 }
 

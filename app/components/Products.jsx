@@ -5,7 +5,6 @@ import { selectProduct } from '../reducers/products'
 
 
 export const Products = (props) => {
-  console.log('props in products', props)
   return (
     <div className="products">
       {props.products.map((product) => {
