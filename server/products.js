@@ -20,12 +20,15 @@ module.exports = require('express').Router()
   })
   .post('/:productId', (req, res, next) => {
     req.body.user_id = req.user.id
-    Review.create(req.body)
-    .then(review => 
-      Review.findOne({where: {id: review.id},
-        include: [User] 
-      })
-    )
-    .then(review => res.json(review))
-    .catch(next)
+    if(req.user){
+      Review.create(req.body)
+      .then(review => 
+        Review.findOne({where: {id: review.id},
+          include: [User] 
+        })
+      )
+      .then(review => res.json(review))
+      .catch(next)
+    }
+    else res.sendStatus(403)
   })
