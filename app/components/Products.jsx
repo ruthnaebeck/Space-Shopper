@@ -9,11 +9,12 @@ export const Products = (props) => {
   return (
     <div className="products">
       {products.map((product) => {
-        return (<div key={product.id} className= "products-product" style={{ backgroundImage: `url(${product.image})` }}>
-          <Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
+        return (<Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
+            <div key={product.id} className= "products-product" style={{ backgroundImage: `url(${product.image})` }}>
             <h2 className="productTitle">{product.title}</h2>
-          </Link>
-        </div>)
+        </div>
+      </Link>
+      )
       })}
     </div>
   )

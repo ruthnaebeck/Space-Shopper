@@ -6,6 +6,7 @@ import {Link} from 'react-router'
 export const Planets = (props) => {
   return (
     <div>
+      <h1>Start booking your next space vacation by selecting a planet!</h1>
       {
         props.planets.map((planet) => {
           return (<div key={planet.id} className="col-md-4 planets">

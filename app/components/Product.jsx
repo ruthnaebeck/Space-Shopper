@@ -18,10 +18,10 @@ class Product extends React.Component {
     const qty = product.invQty
     const reviews= this.props.product.reviews || []
     return (
-      <div>
-        <div className="col-md-6" id="productImage">
+      <div className="product">
+        <div className="product-box">
           <h2> {product.title} </h2>
-          <img src={product.image} />
+          <img id="productImage" src={product.image} />
             <div>
               <span className="price">${product.price}</span>
             </div>

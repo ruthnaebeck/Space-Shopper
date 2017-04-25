@@ -1,8 +1,8 @@
-html, body {
-  background: black;
+body {
+  background-image: url('/assets/images/star_background.jpg')
 }
 
-table {
+table,  {
   color: white;
 }
 
@@ -15,6 +15,15 @@ p {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+#productImage {
+  width: 100%;
+  overflow:hidden;
+}
+
+.product-box {
+  width: 33vw;
 }
 
 .price {
@@ -32,8 +41,9 @@ p {
 }
 
 .products-product {
-  width: 33vw;
-  height: 33vw;
+  width: 32vw;
+  height: 20vw;
+  margin: 10px;
   overflow: hidden;
   background-size: cover;
   background-position: 50% 50%;
@@ -43,6 +53,23 @@ p {
   text-shadow: #2780e3 2px 2px 2px;
   color: white;
   margin: 0;
+}
+
+.cart, .product {
+  color: white
+}
+
+h1 {
+  font-family: "Atomic Age";
+  color: white
+}
+
+.cart {
+  margin-left: 20px;
+}
+
+select {
+  color: black
 }
 
 .form-control {
