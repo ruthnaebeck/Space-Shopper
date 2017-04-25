@@ -60,7 +60,7 @@ module.exports = require('express').Router()
     .then(() => res.sendStatus(204))
     .catch(next)
   })
-  .post('/checkout', 
+  .post('/checkout',
     (req, res, next) => {
       if(req.user) {
         return next();
@@ -72,7 +72,7 @@ module.exports = require('express').Router()
       })
       .then(user => {
         req.user = user
-        next();
+        next()
       })
       .catch(next)
     },
