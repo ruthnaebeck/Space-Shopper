@@ -1,41 +1,23 @@
 import axios from 'axios'
 
-const initialProductState = {
-  products: [],
-  selectedProduct: {}
-}
+const GET = 'GET_PRODUCTS'
 
-const GET_PRODUCTS = 'GET_PRODUCTS'
-const SELECT_PRODUCT = 'SELECT_PRODUCT'
+export const get = products => ({type: GET, products})
 
 
-export const getProducts = function(products) {
-  return {
-    type: GET_PRODUCTS,
-    products: products
-  }
-}
-
-export const selectProduct = function(product) {
-  return {
-    type: SELECT_PRODUCT,
-    selectedProduct: product
-  }
-}
-
-
-export default function(state = initialProductState, action) {
-  const newState = Object.assign({}, state)
-
+export default function(products = [], action) {
   switch (action.type) {
-  case GET_PRODUCTS:
-    newState.products = action.products
-    break
-  case SELECT_PRODUCT:
-    newState.selectedProduct = action.selectedProduct
-    break
+  case GET:
+    return action.products
   default:
-    return state
+    return products
   }
-  return newState
 }
+
+export const fetchProducts = (id) => dispatch => {
+  console.log('id in products', id)
+  axios.get(`/api/planets/${id}`)
+  .then(res => dispatch(get(res.data)))
+  .catch(err => console.error('Error fetching the planets products', err))
+}
+
