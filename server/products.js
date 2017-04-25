@@ -19,8 +19,9 @@ module.exports = require('express').Router()
       .catch(next)
   })
   .post('/:productId', (req, res, next) => {
-    req.body.user_id = req.user.id
-    if (req.user) {
+    const user = req.user || req.session.user
+    if (user) {
+      req.body.user_id = user.id
       Review.create(req.body)
       .then(review =>
         Review.findOne({where: {id: review.id},

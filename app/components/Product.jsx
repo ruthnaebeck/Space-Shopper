@@ -53,7 +53,7 @@ class Product extends React.Component {
             <tbody>
               {reviews && reviews.map(
                 review => <tr key={review.id}>
-                  <td> {review.user.name} </td>
+                  <td> {review.user.name || review.user.email} </td>
                   <td> {review.starRating} </td>
                   <td> {review.text} </td>
                   </tr>
