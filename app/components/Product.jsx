@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, browserHistory } from 'react-router'
 import { createItem } from '../reducers/order'
+import { createReview } from '../reducers/product'
 
 class Product extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class Product extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.addSubmit = this.addSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   render() {
@@ -38,7 +40,7 @@ class Product extends React.Component {
             <button type='submit' className='btn btn-success' onClick={this.addSubmit}> Add To Cart </button>
           </div>
         </div>
-        <table className='table table-striped table-hover'>
+        <table className='table'>
           <thead>
             <tr>
               <th> User Name </th>
@@ -56,6 +58,40 @@ class Product extends React.Component {
               ) }
             </tbody>
         </table>
+        <form className="form-horizontal" onSubmit={this.handleSubmit}>
+           <fieldset>
+              <legend>Write a Review!</legend>
+                <div className="form-group">
+                  <label className="col-xs-2 control-label">Star Rating</label>
+                  <div className="col-xs-10">
+                    <select
+                        type="text"
+                        name="starRating">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                  </div>
+              </div>
+              <div className="form-group">
+                  <label className="col-xs-2 control-label">Review Text</label>
+                  <div className="col-xs-10">
+                      <input
+                          className="form-control"
+                          type="text"
+                          name="reviewText"
+                      />
+                  </div>
+              </div>
+                <div className="form-group">
+                  <div className="col-xs-10 col-xs-offset-2">
+                          <button type="submit" className="btn btn-success">Submit Review</button>
+                  </div>
+                </div>
+            </fieldset>
+        </form>
       </div>
     )
   }
@@ -79,6 +115,24 @@ class Product extends React.Component {
     this.props.createItem(itemToAdd)
     browserHistory.push('/cart')
   }
+
+  handleSubmit(evt){
+    evt.preventDefault()
+    const reviewText = evt.target.reviewText.value
+    const productId = this.props.product.id
+    if(reviewText.length > 10){
+      const review = {
+        starRating: evt.target.starRating.value,
+        text: reviewText,
+        product_id: productId
+      }
+      this.props.createReview(review, productId)
+      evt.target.reviewText.value = ""
+      evt.target.starRating.value = 1
+    }
+    else alert('Your review must be longer than 10 characters')
+
+  }
 }
 
 // It generates a drop down menu for the available qty of the product.
@@ -95,7 +149,7 @@ const generateOptions = (qty) => {
 
 const mapStateToProps = ({product, order}) => ({product, order})
 
-const mapDispatchToProps = { createItem }
+const mapDispatchToProps = { createItem, createReview }
 
 export default connect(
   mapStateToProps, mapDispatchToProps
