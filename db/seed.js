@@ -217,11 +217,11 @@ const products = seed(Product,
 
 const orders = seed(Order, ({users}) => ({
   order1: {
-    status: 'completed',
+    status: 'complete',
     user_id: users.ruth.id
   },
   order2: {
-    status: 'completed',
+    status: 'complete',
     user_id: users.guest.id
   }
 })

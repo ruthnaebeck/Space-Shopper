@@ -1,9 +1,9 @@
 'use strict'
 // downloads
 import React from 'react'
-import {Router, Route, IndexRoute, browserHistory} from 'react-router'
-import {render} from 'react-dom'
-import {connect, Provider} from 'react-redux'
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { render } from 'react-dom'
+import { connect, Provider } from 'react-redux'
 import axios from 'axios'
 
 // components
@@ -18,6 +18,7 @@ import Login from './components/Login'
 import Checkout from './components/Checkout'
 import MyAccount from './components/MyAccount'
 import ThankYou from './components/ThankYou'
+import Order from './components/Order'
 
 // dispatchers
 import { fetchPlanets } from './reducers/planets'
@@ -26,22 +27,24 @@ import { fetchProduct } from './reducers/product'
 import { fetchOrder } from './reducers/order'
 import { fetchOrders } from './reducers/orders'
 import { getReviews } from './reducers/reviews'
+import { fetchOrderDetail } from './reducers/orderdetail'
 
-const Routes = ({ fetchData, onPlanetEnter, onProductEnter, onMyAccountEnter }) => (
-    <Router history={browserHistory}>
-      <Route path="/" component={App} onEnter={fetchData}>
-        <IndexRoute component={Planets} />
-        <Route path="/planets" component={Planets} />
-        <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
-        <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
-        <Route path="/cart" component={Cart} />
-        <Route path="/login" component={Login} />
-        <Route path="/checkout" component={Checkout} />
-        <Route path="/myaccount" component={MyAccount} onEnter={onMyAccountEnter} />
-        <Route path="/orderConfirmation" component={ThankYou} />
-      </Route>
-      <Route path='*' component={NotFound} />
-    </Router>
+const Routes = ({ fetchData, onPlanetEnter, onProductEnter, onOrderEnter }) => (
+  <Router history={browserHistory}>
+    <Route path="/" component={App} onEnter={fetchData}>
+      <IndexRoute component={Planets} />
+      <Route path="/planets" component={Planets} />
+      <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter} />
+      <Route path="/products/:productId" component={Product} onEnter={onProductEnter} />
+      <Route path="/cart" component={Cart} />
+      <Route path="/login" component={Login} />
+      <Route path="/checkout" component={Checkout} />
+      <Route path="/myaccount" component={MyAccount} />
+      <Route path="/orderConfirmation" component={ThankYou} />
+      <Route path="/users/orders/:id" component={Order} onEnter={onOrderEnter} />
+    </Route>
+    <Route path='*' component={NotFound} />
+  </Router>
 )
 
 /* ------------- CONTAINER ---------------- */
@@ -51,6 +54,7 @@ const mapDispatch = dispatch => ({
   fetchData: () => {
     dispatch(fetchPlanets())
     dispatch(fetchOrder())
+    dispatch(fetchOrders())
   },
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
@@ -60,9 +64,10 @@ const mapDispatch = dispatch => ({
     const planetId = nextRouterState.params.categoryId
     dispatch(fetchProducts(planetId))
   },
-  onMyAccountEnter: (nextRouterState) => {
-    dispatch(fetchOrders())
-  }
+  onOrderEnter: (nextRouterState) => {
+    const orderId = nextRouterState.params.id
+    dispatch(fetchOrderDetail(orderId))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatch)(Routes)

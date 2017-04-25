@@ -19,7 +19,7 @@ export const MyAccount = (props) => (
           </tr>
         </thead>
         <tbody>
-          {this.props.orders.map((order) =>
+          {props.orders.map((order) =>
             <tr key={order.id}>
               <td><Link to={`/users/orders/${order.id}`}>{order.id}</Link></td>
               <td>{order.status}</td>
