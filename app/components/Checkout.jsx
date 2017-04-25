@@ -79,7 +79,7 @@ class Checkout extends React.Component {
 
   totalPrice(items) {
     if (items) {
-      return items.reduce((acc, item) => acc + item.price, 0)
+      return items.reduce((acc, item) => acc + (item.price * item.qty), 0)
     }
   }
 
