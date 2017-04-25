@@ -29,7 +29,7 @@ export const Login = ({ login, signup }) => (
         <p>
           <a
             target="_self"
-            href="/api/auth/google"
+            href="/api/auth/login/google"
             className="btn btn-social btn-google">
             <i className="fa fa-google" />
             <span>Log in with Google</span>
