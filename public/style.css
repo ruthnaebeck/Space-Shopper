@@ -2,7 +2,7 @@ body {
   background-image: url('/assets/images/star_background.jpg')
 }
 
-table,  {
+legend, h2, h3, h1, h4, h5, h6, table  {
   color: white;
 }
 
@@ -59,7 +59,7 @@ p {
   color: white
 }
 
-h1 {
+h1, h2 {
   font-family: "Atomic Age";
   color: white
 }

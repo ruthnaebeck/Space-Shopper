@@ -14,6 +14,10 @@ import Products from './components/Products'
 import Product from './components/Product'
 import NotFound from './components/NotFound'
 import Cart from './components/Cart'
+import Login from './components/Login'
+import Checkout from './components/Checkout'
+import MyAccount from './components/MyAccount'
+import ThankYou from './components/ThankYou'
 
 // dispatchers
 import { fetchPlanets } from './reducers/planets'
@@ -30,6 +34,10 @@ const Routes = ({ fetchData, onPlanetEnter, onProductEnter }) => (
         <Route path="/planets/:categoryId" component={Products} onEnter={onPlanetEnter}/>
         <Route path="/products/:productId" component={Product} onEnter={onProductEnter}/>
         <Route path="/cart" component={Cart} />
+        <Route path="/login" component={Login} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/myaccount" component={MyAccount} />
+        <Route path="/orderConfirmation" component={ThankYou} />
       </Route>
       <Route path='*' component={NotFound} />
     </Router>
