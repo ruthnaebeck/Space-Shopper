@@ -1,5 +1,6 @@
 const mustBeLoggedIn = (req, res, next) => {
-  if (!req.user) {
+  const user = req.user || req.session.user
+  if (!user) {
     return res.status(401).send('You must be logged in')
   }
   next()

@@ -28,22 +28,25 @@ module.exports = require('express').Router()
       .catch(next))
   .get('/orders',
     mustBeLoggedIn,
-    (req, res, next) =>
+    (req, res, next) => {
+      const user = req.user || req.session.user
       Order.findAll({
         where: {
-          user_id: req.user.id,
+          user_id: user.id,
           status: 'complete'
         }
       })
       .then(orders => res.json(orders))
-      .catch(next))
+      .catch(next)
+    })
   .get('/orders/:id',
     mustBeLoggedIn,
-    (req, res, next) =>
+    (req, res, next) => {
+      const user = req.user || req.session.user
       Order.findOne({
         where: {
           id: req.params.id,
-          user_id: req.user.id
+          user_id: user.id
         },
         include: [
           {
@@ -52,7 +55,8 @@ module.exports = require('express').Router()
         ]
       })
       .then(order => res.json(order))
-      .catch(next))
+      .catch(next)
+    })
   .get('/:id',
     mustBeLoggedIn,
     (req, res, next) =>

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router'
 
-
 export const Planets = (props) => {
   return (
     <div>
@@ -23,9 +22,6 @@ export const Planets = (props) => {
 }
 
 const mapStateToProps = ({planets}) => ({planets})
-
 const mapDispatchToProps = null
 
-export default connect(
-  mapStateToProps, mapDispatchToProps
-  )(Planets)
+export default connect(mapStateToProps, mapDispatchToProps)(Planets)

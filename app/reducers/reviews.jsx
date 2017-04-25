@@ -1,12 +1,10 @@
 import axios from 'axios'
 
-const initialReviewState = {
-  reviews: []
-}
+/* ------------- ACTIONS ---------------- */
 
 const GET_REVIEWS = 'GET_REVIEWS'
 
-
+/* ------------- ACTION CREATER ---------------- */
 
 export const getReviews = function(reviews) {
   return {
@@ -15,16 +13,13 @@ export const getReviews = function(reviews) {
   }
 }
 
+/* ------------- REDUCERS ---------------- */
 
-export default function(state = initialReviewState, action) {
-  const newState = Object.assign({}, state)
-
+export default function(reviews = [], action) {
   switch (action.type) {
   case GET_REVIEWS:
-    newState.reviews = action.reviews
-    break
+    return action.reviews
   default:
-    return state
+    return reviews
   }
-  return newState
 }

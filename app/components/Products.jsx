@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { selectProduct } from '../reducers/products'
 
-
 export const Products = (props) => {
   const products = props.products || []
   return (
@@ -14,7 +13,7 @@ export const Products = (props) => {
             <h2 className="productTitle">{product.title}</h2>
         </div>
       </Link>
-      )
+        )
       })}
     </div>
   )

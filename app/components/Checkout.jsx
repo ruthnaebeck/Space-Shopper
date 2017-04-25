@@ -9,63 +9,61 @@ class Checkout extends React.Component {
 
     // const handleSubmit = props.handleSubmit
     // // need to set this up^
-    constructor(props) {
-        super(props)
-        this.state = {
+  constructor(props) {
+    super(props)
+    this.state = {
             // add states
-            name: {
-                value: '',
-                filledIn: false,
-            },
-            email: {
-                value: '',
-                filledIn: false,
-            },
-            streetAddress: {
-                value: '',
-                filledIn: false,
-            },
-            city: {
-                value: '',
-                filledIn: false,
-            },
-            state: {
-                value: '',
-                filledIn: false,
-            },
-            zip: {
-                value: '',
-                filledIn: false,
-            },
-            ccnType: {
-                value: '',
-                filledIn: false,
-            },
-            ccnNum: {
-                value: '',
-                filledIn: false,
-            },
-            expMonth: {
-                value: '',
-                filledIn: false,
-            },
-            expYear: {
-                value: '',
-                filledIn: false,
-            },
-            cvv: {
-                value: '',
-                filledIn: false,
-            }
+      name: {
+        value: '',
+        filledIn: false,
+      },
+      email: {
+        value: '',
+        filledIn: false,
+      },
+      streetAddress: {
+        value: '',
+        filledIn: false,
+      },
+      city: {
+        value: '',
+        filledIn: false,
+      },
+      state: {
+        value: '',
+        filledIn: false,
+      },
+      zip: {
+        value: '',
+        filledIn: false,
+      },
+      ccnType: {
+        value: '',
+        filledIn: false,
+      },
+      ccnNum: {
+        value: '',
+        filledIn: false,
+      },
+      expMonth: {
+        value: '',
+        filledIn: false,
+      },
+      expYear: {
+        value: '',
+        filledIn: false,
+      },
+      cvv: {
+        value: '',
+        filledIn: false,
+      }
 
-        }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.totalPrice = this.totalPrice.bind(this)
-        this.disableCheck = this.disableCheck.bind(this)
     }
-
-
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.totalPrice = this.totalPrice.bind(this)
+    this.disableCheck = this.disableCheck.bind(this)
+  }
 
   handleChange(e) {
     this.setState({ [e.target.name]: { value: e.target.value, filledIn: true } })
@@ -92,9 +90,8 @@ class Checkout extends React.Component {
     return false
   }
 
-
-    render() {
-        return (
+  render() {
+    return (
             <div>
 
                 <h2>Order Details</h2>
@@ -282,23 +279,22 @@ class Checkout extends React.Component {
                 </form>
 
             </div>
-        )
-    }
+    )
+  }
 }
-
 
 const mapStateToProps = (state) => {
-    return {
-        order: state.order,
-        items: state.order.items
-    }
+  return {
+    order: state.order,
+    items: state.order.items
+  }
 }
 const mapDispatchToProps = (dispatch) => {
-    return {
-        complete(order, email){
-            dispatch(completeOrder(order, email))
-        }
+  return {
+    complete(order, email) {
+      dispatch(completeOrder(order, email))
     }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
