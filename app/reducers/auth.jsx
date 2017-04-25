@@ -6,13 +6,11 @@ const AUTHENTICATED = 'AUTHENTICATED'
 
 /* ------------- ACTION CREATER ---------------- */
 
-export const authenticated = user => ({
-  type: AUTHENTICATED, user
-})
+export const authenticated = user => ({ type: AUTHENTICATED, user })
 
 /* ------------- REDUCERS ---------------- */
 
-export default function reducer(state=null, action){
+export default function reducer(state=null, action) {
   switch (action.type) {
   case AUTHENTICATED:
     return action.user
@@ -43,3 +41,9 @@ export const whoami = () =>
         dispatch(authenticated(user))
       })
       .catch(failed => dispatch(authenticated(null)))
+
+export const signup = (email, password) => dispatch => {
+  axios.post('/api/auth/signup/local', {email, password})
+    .then(() => dispatch(whoami()))
+    .catch(() => dispatch(whoami()))
+}

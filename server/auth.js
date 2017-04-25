@@ -120,15 +120,14 @@ passport.use(new (require('passport-local').Strategy)(
   }
 ))
 
-auth.get('/whoami', (req, res) => res.send(req.user))
-
 // POST requests for local login:
 // auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
 
 auth.post('/login/local', passport.authenticate('local'), function(req, res, next) {
+  const user = req.user || req.session.user
   Order.findOne({
     where: {
-      user_id: req.user.id,
+      user_id: user.id,
       status: 'pending'
     }
   }).then(order => {
@@ -137,7 +136,7 @@ auth.post('/login/local', passport.authenticate('local'), function(req, res, nex
       res.json(order)
     } else {
       return Order.update({
-        user_id: req.user.id
+        user_id: user.id
       }, {
         where: {
           id: req.session.cartId
@@ -147,6 +146,29 @@ auth.post('/login/local', passport.authenticate('local'), function(req, res, nex
       .catch(next)
     }
   })
+})
+
+auth.post('/signup/local', function(req, res, next) {
+  User.create({
+    accountType: 'user',
+    email: req.body.email,
+    password: req.body.password
+  })
+  .then(user => {
+    req.session.user = user
+    return Order.update({ user_id: req.session.user.id },
+      { where: { id: req.session.cartId } })
+      .then(order => res.json(order))
+      .catch(next)
+  })
+  .catch(next)
+})
+
+auth.get('/whoami', (req, res) => {
+  if (!req.user) {
+    req.user = req.session.user
+  }
+  res.send(req.user)
 })
 
 // GET requests for OAuth login:
@@ -160,7 +182,8 @@ auth.get('/login/:strategy', (req, res, next) => {
 )
 
 auth.post('/logout', (req, res) => {
-  req.logout()
+  if (req.user) req.logout()
+  else req.session.user = null
   res.redirect('/api/auth/whoami')
 })
 
