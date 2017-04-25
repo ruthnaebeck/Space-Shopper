@@ -59,7 +59,8 @@ module.exports = require('express').Router()
   })
   .post('/checkout',
     (req, res, next) => {
-      if (req.user || req.session.user) {
+      let newUser = req.user || req.session.user
+      if (newUser) {
         return next()
       }
 
@@ -68,7 +69,7 @@ module.exports = require('express').Router()
         email: req.body.email.value
       })
       .then(user => {
-        req.user = user
+        newUser = user
         next()
       })
       .catch(next)
@@ -81,10 +82,10 @@ module.exports = require('express').Router()
         include: [{ model: Item, include: [Product] }]
       })
       .then(order => {
-        // console.log('order', order);
+        let newUser = req.user || req.session.user
         req.session.cartId = null // this is resetting the cartId
         req.cart = null // this is clearing the cart
-        return order.update({ status: 'complete', user_id: req.user.id }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
+        return order.update({ status: 'complete', user_id: newUser.id }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
       })
       .then((order) => {
         order.items.forEach((item) => {
