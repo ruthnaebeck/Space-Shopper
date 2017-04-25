@@ -9,12 +9,12 @@ export const Login = ({ login, signup }) => (
         evt.preventDefault()
         login(evt.target.email.value, evt.target.password.value)
         browserHistory.push('/')
-      }}>
-        <div className="form-group">
+      } }>
+        <div className = "form-group">
           <label>Email</label>
           <input name="email" />
         </div>
-        <div className="form-group">
+        <div className = "form-group">
           <label>Password</label>
           <input label="password" name="password" type="password" />
         </div>
@@ -37,19 +37,18 @@ export const Login = ({ login, signup }) => (
         </p>
       </div>
     </div>
-
     <div className="col-md-6">
       <h2>SIGN UP</h2>
       <form onSubmit={evt => {
         evt.preventDefault()
         signup(evt.target.email.value, evt.target.password.value)
         browserHistory.push('/')
-      }}>
-        <div className="form-group">
+      } }>
+        <div className = "form-group">
           <label>Email</label>
           <input name="email" />
         </div>
-        <div className="form-group">
+        <div className = "form-group">
           <label>Password</label>
           <input label="password" name="password" type="password" />
         </div>
@@ -59,10 +58,10 @@ export const Login = ({ login, signup }) => (
   </div>
 )
 
-import { login, signup } from 'APP/app/reducers/auth'
-import { connect } from 'react-redux'
+import {login, signup} from 'APP/app/reducers/auth'
+import {connect} from 'react-redux'
 
 export default connect(
   state => ({}),
-  { login, signup },
+  {login, signup},
 )(Login)

@@ -9,7 +9,6 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('props in cart', this.props)
     const items = this.props.order.items || []
     return (
     <div className="cart">
