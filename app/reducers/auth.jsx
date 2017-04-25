@@ -43,3 +43,9 @@ export const whoami = () =>
         dispatch(authenticated(user))
       })
       .catch(failed => dispatch(authenticated(null)))
+
+export const signup = (email, password) => dispatch => {
+  axios.post('/api/auth/signup/local', {email, password})
+    .then(() => dispatch(whoami()))
+    .catch(() => dispatch(whoami()))
+}
