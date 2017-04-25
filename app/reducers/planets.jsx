@@ -1,29 +1,22 @@
 import axios from 'axios'
 
-const initialPlanetState = {
-  planets: []
-}
+const GET = 'GET_PLANETS'
 
-const GET_PLANETS = 'GET_PLANETS'
+export const get = (planets) => ({ type: GET, planets })
 
 
-export const getPlanets = function(planets) {
-  return {
-    type: GET_PLANETS,
-    planets: planets
-  }
-}
-
-
-export default function(state = initialPlanetState, action) {
-  const newState = Object.assign({}, state)
-
+export default function reducer(planets = [], action) {
   switch (action.type) {
-  case GET_PLANETS:
-    newState.planets = action.planets
-    break
+  case GET:
+    return action.planets
   default:
-    return state
+    return planets
   }
-  return newState
+}
+export const fetchPlanets = () => dispatch => {
+  axios.get('/api/planets')
+  .then(res => {
+    dispatch(get(res.data))
+  })
+  .catch(err => console.error('Error fetchPlanets', err))
 }

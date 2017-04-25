@@ -5,10 +5,10 @@ import { selectProduct } from '../reducers/products'
 
 
 export const Products = (props) => {
-  console.log('props in products', props)
+  const products = props.products || []
   return (
     <div className="products">
-      {props.products.map((product) => {
+      {products.map((product) => {
         return (<div key={product.id} className= "products-product" style={{ backgroundImage: `url(${product.image})` }}>
           <Link to={`/products/${product.id}`} onClick={() => props.setProduct(product)}>
             <h2 className="productTitle">{product.title}</h2>
@@ -19,18 +19,7 @@ export const Products = (props) => {
   )
 }
 
-// TODOS HERE:
-// - for <Link> {/*insert link to one product*/}
-// - for <img /> {/*inset image src of product*/}
-
-
-const mapStateToProps = (state) => {
-  // will need to check our state once connected to DB
-  return {
-    products: state.products.products,
-    selectedProduct: state.products.selectedProduct
-  }
-}
+const mapStateToProps = ({products}) => ({products})
 const mapDispatchToProps = (dispatch) => {
   return {
     setProduct(product) {
