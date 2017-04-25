@@ -5,6 +5,7 @@ const rootReducer = combineReducers({
   planets: require('./planets').default,
   order: require('./order').default,
   products: require('./products').default,
+  product: require('./product').default,
   reviews: require('./reviews').default
 })
 

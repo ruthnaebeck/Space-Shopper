@@ -2,8 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Planets from './Planets'
 
-const App = ({ children, user }) => {
-  return (
+const App = ({ children, user }) => (
     <div>
         <nav className="navbar navbar-default">
             <div className="container-fluid">
@@ -31,8 +30,6 @@ const App = ({ children, user }) => {
         </div>
     </div>
   )
-}
-
 
 export default connect(
   ({ auth }) => ({ user: auth })

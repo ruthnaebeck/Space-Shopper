@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { removeItem } from '../reducers/order'
 
 class Cart extends React.Component {
@@ -39,7 +40,9 @@ class Cart extends React.Component {
             </tr>)}
         </tbody>
       </table>
-      <button className="btn-default">Checkout</button>
+      <Link to={'/checkout'} >
+        <button className="btn-default">Checkout</button>
+      </Link>
     </div>
     )
   }

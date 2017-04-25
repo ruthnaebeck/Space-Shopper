@@ -14,9 +14,9 @@ class Product extends React.Component {
   }
 
   render() {
-    const product = this.props.selectedProduct
+    const product = this.props.product
     const qty = product.invQty
-    const reviews= this.props.reviews
+    const reviews= this.props.product.reviews || []
     return (
       <div className="product">
         <div className="product-box">
@@ -69,7 +69,7 @@ class Product extends React.Component {
   addSubmit(evt) {
     evt.preventDefault()
     const qty = this.state.selectedQty
-    const product = this.props.selectedProduct
+    const product = this.props.product
     const itemToAdd = {
       product_id: product.id,
       price: product.price,
@@ -93,13 +93,7 @@ const generateOptions = (qty) => {
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    selectedProduct: state.products.selectedProduct,
-    reviews: state.reviews.reviews,
-    order: state.order
-  }
-}
+const mapStateToProps = ({product, order}) => ({product, order})
 
 const mapDispatchToProps = { createItem }
 

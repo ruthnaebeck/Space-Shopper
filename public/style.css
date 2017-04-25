@@ -71,3 +71,11 @@ h1 {
 select {
   color: black
 }
+
+.form-control {
+  width: 50vw
+}
+
+.control-label {
+  color: white
+}
