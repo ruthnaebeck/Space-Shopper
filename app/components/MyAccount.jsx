@@ -3,15 +3,10 @@ import { logout } from 'APP/app/reducers/auth'
 import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
 
-class MyAccount extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (<div>
+export const MyAccount = (props) => (
+  <div>
       <button onClick={evt => {
-        this.props.logout()
+        props.logout()
         browserHistory.push('/')
       }
       }> Logout </button>
@@ -32,8 +27,6 @@ class MyAccount extends React.Component {
         </tbody>
       </table>
     </div>)
-  }
-}
 
 /* ------------- CONTAINER --------------- */
 
