@@ -92,6 +92,7 @@ const generateOptions = (qty) => {
   return result
 }
 
+
 const mapStateToProps = ({product, order}) => ({product, order})
 
 const mapDispatchToProps = { createItem }
