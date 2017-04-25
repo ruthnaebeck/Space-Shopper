@@ -113,7 +113,7 @@ passport.use(new (require('passport-local').Strategy)(
               return done(null, false, { message: 'Login incorrect' })
             }
             debug('authenticate user(email: "%s") did ok: user.id=%d', email, user.id)
-            done(null, user) // ?? Is this setting req.user?
+            done(null, user)
           })
       })
       .catch(done)
@@ -124,9 +124,10 @@ passport.use(new (require('passport-local').Strategy)(
 // auth.post('/login/local', passport.authenticate('local', {successRedirect: '/'}))
 
 auth.post('/login/local', passport.authenticate('local'), function(req, res, next) {
+  const user = req.user || req.session.user
   Order.findOne({
     where: {
-      user_id: req.user.id,
+      user_id: user.id,
       status: 'pending'
     }
   }).then(order => {
@@ -135,7 +136,7 @@ auth.post('/login/local', passport.authenticate('local'), function(req, res, nex
       res.json(order)
     } else {
       return Order.update({
-        user_id: req.user.id
+        user_id: user.id
       }, {
         where: {
           id: req.session.cartId
@@ -155,32 +156,13 @@ auth.post('/signup/local', function(req, res, next) {
   })
   .then(user => {
     req.session.user = user
-    return Order.findOne({
-      where: {
-        user_id: req.user.id,
-        status: 'pending'
-      }
-    })
-  })
-  .then(order => {
-    if (order) {
-      req.session.cartId = order.id
-      res.json(order)
-    } else {
-      return Order.update({
-        user_id: req.user.id
-      }, {
-        where: {
-          id: req.session.cartId
-        }
-      })
-      .then(order => res.sendStatus(204))
+    return Order.update({ user_id: req.session.user.id },
+      { where: { id: req.session.cartId } })
+      .then(order => res.json(order))
       .catch(next)
-    }
   })
   .catch(next)
 })
-
 
 auth.get('/whoami', (req, res) => {
   if (!req.user) {
@@ -188,7 +170,6 @@ auth.get('/whoami', (req, res) => {
   }
   res.send(req.user)
 })
-
 
 // GET requests for OAuth login:
 // Register this route as a callback URL with OAuth provider
@@ -201,7 +182,8 @@ auth.get('/login/:strategy', (req, res, next) => {
 )
 
 auth.post('/logout', (req, res) => {
-  req.logout()
+  if (req.user) req.logout()
+  else req.session.user = null
   res.redirect('/api/auth/whoami')
 })
 

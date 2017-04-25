@@ -18,11 +18,8 @@ module.exports = require('express').Router()
       })
       .then((order) => {
         req.cart = order
-        // Receiving warning message:
-        // a promise was created in a handler but was not returned from it
-        // According to docs, it's because we aren't returning:
-        // http://bluebirdjs.com/docs/warning-explanations.html#warning-a-promise-was-created-in-a-handler-but-was-not-returned-from-it
         next()
+        return null
       })
       .catch(next)
     } else {
@@ -62,8 +59,8 @@ module.exports = require('express').Router()
   })
   .post('/checkout',
     (req, res, next) => {
-      if(req.user) {
-        return next();
+      if (req.user || req.session.user) {
+        return next()
       }
 
       User.create({
@@ -105,8 +102,6 @@ module.exports = require('express').Router()
         })
       })
       .then(order => {
-        // console.log('req - looking for user', req.user)
-        //req.user is undefined bc no one's logged in
         res.sendStatus(204)
       })
       .catch(next)
