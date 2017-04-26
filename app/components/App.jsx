@@ -22,8 +22,9 @@ const App = ({ children, user }) => (
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
-                        <li><a href="/cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>  Cart</a></li>
-                        { user ? <li><a href="/myaccount"> My Account </a></li> : <li><a href="/login">Log In / Sign Up</a></li>}
+                        <li><a href="/github">GitHub</a></li>
+                        <li><a href="/cart"><span className="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Cart</a></li>
+                        { user ? <li><a href="/myaccount">My Account</a></li> : <li><a href="/login">Log In / Sign Up</a></li>}
                     </ul>
                 </div>
             </div>

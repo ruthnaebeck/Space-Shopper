@@ -8,12 +8,6 @@ api
   .use('/users', require('./users'))
   .use('/planets', require('./planets'))
   .use('/cart', require('./cart'))
-  // // Add item to session manually
-  // .get('/session', (req, res, next) => {
-  //   console.log(req.body)
-  //   req.cart.items = [{product: {title: 'Mars Hotel'}, productId: 1, qty: 1, price: 3.99}]
-  //   res.send(JSON.stringify(req.session.cart))
-  // })
   .use('/products', require('./products'))
 
 // No routes matched? 404.

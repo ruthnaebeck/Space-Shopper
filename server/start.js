@@ -53,6 +53,8 @@ module.exports = app
 
   // Serve our api - ./api also requires in ../db, which syncs with our database
   .use('/api', require('./api'))
+  .use('/github', (req, res) =>
+    res.status(200).redirect('https://github.com/jodiely/Space-Shopper'))
 
   // any requests with an extension (.js, .css, etc.) turn into 404
   .use((req, res, next) => {
