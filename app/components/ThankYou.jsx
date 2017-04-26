@@ -5,7 +5,7 @@ const ThankYou = (props) => {
         <div>
             <h1>Thank you for your order!</h1>
             <p>
-                Thanks for shopping with Space Shopper! A confirmation email has been sent to your email.
+                Thanks for shopping with Space Shopper!
             </p>
         </div>
   )
