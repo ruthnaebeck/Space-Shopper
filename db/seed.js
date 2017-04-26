@@ -48,7 +48,6 @@ const users = seed(User, {
 //   puppies: { name: 'puppies' },
 // })
 
-
 const categories = seed(Category, {
   mars: {
     name: 'Mars',

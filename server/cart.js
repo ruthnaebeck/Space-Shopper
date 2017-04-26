@@ -8,7 +8,6 @@ const User = db.model('users')
 
 module.exports = require('express').Router()
   .use((req, res, next) => {
-    // console.log('req.session in cart routes', req.session)
     if (req.session.cartId) {
       Order.findOne({
         where: {
@@ -82,10 +81,10 @@ module.exports = require('express').Router()
         include: [{ model: Item, include: [Product] }]
       })
       .then(order => {
-        let newUser = req.user || req.session.user
+        const newUser = req.user || req.session.user
         req.session.cartId = null // this is resetting the cartId
         req.cart = null // this is clearing the cart
-        return order.update({ status: 'complete', user_id: newUser.id }) // set user_id to req.user.id(?) - req.user set at the '.use' route above
+        return order.update({ status: 'complete', user_id: newUser.id }) // set user_id to req.user.id
       })
       .then((order) => {
         order.items.forEach((item) => {
@@ -107,10 +106,3 @@ module.exports = require('express').Router()
       })
       .catch(next)
     })
-
-    // ***** TODO **** //
-    // ***** (if not logged in) create user with req.body from checkout page ***** //
-    // ***** (if logged in) find user & associate to the order ***** //
-
-    // LOW PRIORITY
-    // ***** TODO: send email to user after submitted ***** //

@@ -4,6 +4,8 @@ import { Link, browserHistory } from 'react-router'
 import { createItem } from '../reducers/order'
 import { createReview } from '../reducers/product'
 
+/* global alert */
+
 class Product extends React.Component {
   constructor(props) {
     super(props)
@@ -51,7 +53,7 @@ class Product extends React.Component {
             <tbody>
               {reviews && reviews.map(
                 review => <tr key={review.id}>
-                  <td> {review.user.name} </td>
+                  <td> {review.user.name || review.user.email} </td>
                   <td> {review.starRating} </td>
                   <td> {review.text} </td>
                   </tr>
@@ -116,22 +118,20 @@ class Product extends React.Component {
     browserHistory.push('/cart')
   }
 
-  handleSubmit(evt){
+  handleSubmit(evt) {
     evt.preventDefault()
     const reviewText = evt.target.reviewText.value
     const productId = this.props.product.id
-    if(reviewText.length > 10){
+    if (reviewText.length > 10) {
       const review = {
         starRating: evt.target.starRating.value,
         text: reviewText,
         product_id: productId
       }
       this.props.createReview(review, productId)
-      evt.target.reviewText.value = ""
+      evt.target.reviewText.value = ''
       evt.target.starRating.value = 1
-    }
-    else alert('Your review must be longer than 10 characters')
-
+    } else alert('Your review must be longer than 10 characters')
   }
 }
 
@@ -145,7 +145,6 @@ const generateOptions = (qty) => {
   }
   return result
 }
-
 
 const mapStateToProps = ({product, order}) => ({product, order})
 

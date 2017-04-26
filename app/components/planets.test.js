@@ -12,7 +12,6 @@ import App from './App'
 import { Planets } from './Planets'
 
 describe('Planets Component', () => {
-
   describe('fetching all planets', () => {
     let planetsFromDb, renderedPlanets
     beforeEach('create copy of app', () => {
@@ -24,8 +23,3 @@ describe('Planets Component', () => {
     })
   })
 })
-
-// test that all planets were fetched correctly
-  // length of array - # of planets
-  // check specific property-value of a known planet?
-

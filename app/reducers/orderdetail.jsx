@@ -2,20 +2,20 @@ import axios from 'axios'
 
 /* ------------- ACTIONS ---------------- */
 
-const GET = 'GET_ORDER'
+const GET = 'GET_ORDER_DETAIL'
 
 /* ------------- ACTION CREATER ---------------- */
 
-export const get = order => ({type: GET, order})
+export const get = orderdetail => ({type: GET, orderdetail})
 
 /* ------------- REDUCERS ---------------- */
 
-export default function reducer(order = {}, action) {
+export default function reducer(orderdetail = {}, action) {
   switch (action.type) {
   case GET:
-    return action.order
+    return action.orderdetail
   default:
-    return order
+    return orderdetail
   }
 }
 

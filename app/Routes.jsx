@@ -29,7 +29,7 @@ import { fetchOrders } from './reducers/orders'
 import { getReviews } from './reducers/reviews'
 import { fetchOrderDetail } from './reducers/orderdetail'
 
-const Routes = ({ fetchData, onPlanetEnter, onProductEnter, onOrderEnter }) => (
+const Routes = ({ fetchData, onPlanetEnter, onProductEnter, onOrderEnter, onMyAccountEnter }) => (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={fetchData}>
       <IndexRoute component={Planets} />
@@ -39,7 +39,7 @@ const Routes = ({ fetchData, onPlanetEnter, onProductEnter, onOrderEnter }) => (
       <Route path="/cart" component={Cart} />
       <Route path="/login" component={Login} />
       <Route path="/checkout" component={Checkout} />
-      <Route path="/myaccount" component={MyAccount} />
+      <Route path="/myaccount" component={MyAccount} onEnter={onMyAccountEnter} />
       <Route path="/orderConfirmation" component={ThankYou} />
       <Route path="/users/orders/:id" component={Order} onEnter={onOrderEnter} />
     </Route>
@@ -54,7 +54,6 @@ const mapDispatch = dispatch => ({
   fetchData: () => {
     dispatch(fetchPlanets())
     dispatch(fetchOrder())
-    dispatch(fetchOrders())
   },
   onProductEnter: (nextRouterState) => {
     const productId = nextRouterState.params.productId
@@ -67,6 +66,9 @@ const mapDispatch = dispatch => ({
   onOrderEnter: (nextRouterState) => {
     const orderId = nextRouterState.params.id
     dispatch(fetchOrderDetail(orderId))
+  },
+  onMyAccountEnter: (nextRouterState) => {
+    dispatch(fetchOrders())
   },
 })
 
