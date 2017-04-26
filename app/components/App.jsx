@@ -14,6 +14,11 @@ const App = ({ children, user }) => (
                         <span className="icon-bar"></span>
                     </button>
                     <a className="navbar-brand" href="/">Space Shopper</a>
+                    <ul className="nav navbar-nav navbar-left">
+                        <li><a href="/planets/1">Mars</a></li>
+                        <li><a href="/planets/2">Titan</a></li>
+                        <li><a href="/planets/3">Neptune</a></li>
+                    </ul>
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav navbar-right">
