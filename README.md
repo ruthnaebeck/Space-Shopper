@@ -1,5 +1,34 @@
-Welcome to the Space Shopper project!
+# Space Shopper
 
-To see the deployed site, please visit:
+Space Shopper is a prototype e-commerce site that sells imaginary Space Vacations.<br />
+Built with Express.js, React, Redux, Postgres, Sequelize, Boostrap, Passport, and OAuth.<br />
+Project was run using agile development with Waffle.io.
 
-https://space-shopper-app.herokuapp.com/
+Visit the site at https://space-shopper-app.herokuapp.com/
+
+# For Developers
+
+<b>Local Development</b>
+<ul>
+  <li>Fork the Repo</li>
+  <li>Git Clone</li>
+  <li>npm install</li>
+</ul>
+
+<b>Heroku Deployment</b>
+<ul>
+  <li>You must have the following:
+    <ul>
+      <li>Heroku account</li>
+      <li>Node / npm installed locally</li>
+      <li>Heroku Command Line Interface installed locally</li>
+    </ul>
+  </li>
+  <li>In the command line:
+    <ul>
+      <li>heroku login</li>
+      <li>heroku create appNameHere</li>
+      <li>git push heroku master</li>
+    </ul>
+  </li>
+</ul>
