@@ -31,7 +31,9 @@ Visit the site at https://space-shopper-app.herokuapp.com/
     <ul>
       <li>heroku login</li>
       <li>heroku create appNameHere</li>
-      <li>git push heroku master</li>
+      <li>heroku addons:create heroku-postgresql:hobby-dev</li>
+      <li>npm run deploy-heroku</li>
+      <li>heroku run npm run seed</li>
     </ul>
   </li>
 </ul>
