@@ -13,6 +13,9 @@ Visit the site at https://space-shopper-app.herokuapp.com/
   <li>Fork the Repo</li>
   <li>Git Clone</li>
   <li>npm install</li>
+  <li>npm run dev</li>
+  <li>npm run seed</li>
+  <li>Navigate to http://localhost:1337/</li>
 </ul>
 
 <b>Heroku Deployment</b>
