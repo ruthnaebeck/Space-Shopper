@@ -1,7 +1,7 @@
 # Space Shopper
 
 Space Shopper is a prototype e-commerce site that sells imaginary Space Vacations.<br />
-Built with Express.js, React, Redux, Postgres, Sequelize, Boostrap, Passport, and OAuth.<br />
+Built with Express.js, React, Redux, Postgres, Sequelize, Bootstrap, Passport, and OAuth.<br />
 Project was run using agile development with Waffle.io.
 
 Visit the site at https://space-shopper-app.herokuapp.com/
